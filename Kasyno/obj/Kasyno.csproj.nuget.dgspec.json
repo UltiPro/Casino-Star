@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\3. PROJEKTY\\MVC Project\\Kasyno\\Kasyno.csproj": {}
+    "D:\\3. PROJEKTY\\Aplikacje-Webowe-W-ASP-MVC\\Kasyno\\Kasyno.csproj": {}
   },
   "projects": {
-    "D:\\3. PROJEKTY\\MVC Project\\Kasyno\\Kasyno.csproj": {
+    "D:\\3. PROJEKTY\\Aplikacje-Webowe-W-ASP-MVC\\Kasyno\\Kasyno.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\3. PROJEKTY\\MVC Project\\Kasyno\\Kasyno.csproj",
+        "projectUniqueName": "D:\\3. PROJEKTY\\Aplikacje-Webowe-W-ASP-MVC\\Kasyno\\Kasyno.csproj",
         "projectName": "Kasyno",
-        "projectPath": "D:\\3. PROJEKTY\\MVC Project\\Kasyno\\Kasyno.csproj",
+        "projectPath": "D:\\3. PROJEKTY\\Aplikacje-Webowe-W-ASP-MVC\\Kasyno\\Kasyno.csproj",
         "packagesPath": "C:\\Users\\Ulti\\.nuget\\packages\\",
-        "outputPath": "D:\\3. PROJEKTY\\MVC Project\\Kasyno\\obj\\",
+        "outputPath": "D:\\3. PROJEKTY\\Aplikacje-Webowe-W-ASP-MVC\\Kasyno\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ulti\\AppData\\Roaming\\NuGet\\NuGet.Config"
