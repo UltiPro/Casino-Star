@@ -1,0 +1,46 @@
+@font-face {
+    font-family: MainFont;
+    src: url("/assets/MainFont.ttf");
+}
+
+:root {
+    --Casino-Outside: 94, 80, 63;
+    --Casino-Inside: 198, 172, 143;
+    --Casino-Text: 234, 224, 213;
+    --Casino-Light-Border: 34, 51, 59;
+    --Casino-Border: 10, 9, 8;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(var(--Casino-Outside));
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(var(--Casino-Inside));
+    border-radius: 5px;
+}
+
+body,
+html {
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/assets/background.jpg");
+    color: rgb(var(--Casino-Text));
+    font-size: 1.2rem;
+    font-family: MainFont;
+}
+
+.text-Casino {
+    color: rgb(var(--Casino-Text));
+}
+
+.shadowText {
+    text-shadow: -1px 0 rgb(var(--Casino-Light-Border)), 0 1px rgb(var(--Casino-Light-Border)), 1px 0 rgb(var(--Casino-Light-Border)), 0 -1px rgb(var(--Casino-Light-Border));
+}

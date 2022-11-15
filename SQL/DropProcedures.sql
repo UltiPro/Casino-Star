@@ -1,0 +1,26 @@
+USE [CasinoStar]
+GO
+DROP PROCEDURE Users_InsertUser
+/*
+GO
+DROP PROCEDURE Users_CheckEmail
+GO
+DROP PROCEDURE Users_CheckLogin
+GO
+DROP PROCEDURE Users_GetUser
+GO
+DROP PROCEDURE Users_GetUserById
+GO
+DROP PROCEDURE Users_GetAllUsers
+GO
+DROP PROCEDURE Users_UpdateEmail
+GO
+DROP PROCEDURE Users_UpdatePassword
+GO
+DROP PROCEDURE Users_UpdateAdmin
+GO
+DROP PROCEDURE Users_UpdateBanned
+GO
+DROP PROCEDURE Users_UpdateActive
+GO
+DROP PROCEDURE Users_RemoveUser

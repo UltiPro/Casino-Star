@@ -1,0 +1,7 @@
+Patryk Komputer:
+data source=DESKTOP-EIM7AUQ\SQLEXPRESS;initial catalog=master;trusted_connection=true
+
+Patryk Laptop:
+
+
+Dawid Komputer:
