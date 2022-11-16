@@ -1,7 +1,7 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-opacity-50 border-CasinoNavBar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-opacity-50 border-CasinoNavBar shadow-lg">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">{{appName | uppercase}}</a>
+      <a class="navbar-brand" [routerLink]="['/']">{{appName | uppercase}}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
         aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
@@ -18,10 +18,15 @@
         <button *ngIf="isLogged; else elseLogged " class="btn btn-success">Login <span class="text-Casino">|</span> Sign
           In</button>
         <ng-template #elseLogged>
-          <button class="btn btn-secondary p-0 me-2">
-            <img src="/assets/images/whiteSettings.png" class="settings-button">
-          </button>
-          <button class="btn btn-danger">Log Out</button>
+          <div class="w-50 w-lg-25 p-0 mb-2 mb-lg-0 me-4 text-lg-end"> Welcome, <span class="text-danger">{{"Ulti"}}</span><br /> {{"1500"}}
+            <img src="/assets/images/dolar.png" class="money-icon">
+          </div>
+          <a [routerLink]="['/Settings']">
+            <button class="btn btn-secondary p-1 me-2">
+              <img src="/assets/images/whiteSettings.png" class="settings-button">
+            </button>
+          </a>
+          <button class="btn btn-danger logout-button">Log Out</button>
         </ng-template>
       </div>
     </div>

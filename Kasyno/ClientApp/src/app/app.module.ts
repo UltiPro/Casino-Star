@@ -6,17 +6,33 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { BlackjackComponent } from './blackjack/blackjack.component';
+import { LoginComponent } from './login/login.component';
+import { RouletteComponent } from './roulette/roulette.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { CasinoStarComponent } from './casino-star/casino-star.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    BlackjackComponent,
+    LoginComponent,
+    RouletteComponent,
+    SettingsComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([
+      { path: '', component: CasinoStarComponent, pathMatch: 'full'},
+      { path: 'BlackJack', component: BlackjackComponent },
+      { path: 'Roulette', component: RouletteComponent },
+      { path: 'Settings', component: SettingsComponent }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

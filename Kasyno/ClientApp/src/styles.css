@@ -35,6 +35,18 @@ html {
     color: rgb(var(--Casino-Text));
     font-size: 1.2rem;
     font-family: MainFont;
+    z-index: 1;
+}
+
+a,
+a:focus,
+a:active {
+    text-decoration: none;
+    text-shadow: none;
+}
+
+a:hover {
+    text-shadow: -1px 0 darkgrey, 0 1px darkgrey, 1px 0 darkgrey, 0 -1px darkgrey;
 }
 
 .text-Casino {
@@ -43,4 +55,28 @@ html {
 
 .shadowText {
     text-shadow: -1px 0 rgb(var(--Casino-Light-Border)), 0 1px rgb(var(--Casino-Light-Border)), 1px 0 rgb(var(--Casino-Light-Border)), 0 -1px rgb(var(--Casino-Light-Border));
+}
+
+.background-CasinoStar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.75);
+    min-width: 100vw;
+    min-height: 100vh;
+    -webkit-filter: blur(150px);
+    -moz-filter: blur(150px);
+    -o-filter: blur(150px);
+    -ms-filter: blur(150px);
+    filter: blur(150px);
+}
+
+.content {
+    position: relative;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    text-align: center;
 }

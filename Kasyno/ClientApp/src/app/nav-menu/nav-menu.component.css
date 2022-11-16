@@ -23,5 +23,13 @@ html {
 }
 
 .settings-button{
-  width: 2.2rem;
+  width: 1.7rem;
+}
+
+.logout-button{
+  width: 7rem;
+}
+
+.money-icon{
+  width: 1rem;
 }
