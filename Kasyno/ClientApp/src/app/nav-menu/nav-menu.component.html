@@ -6,7 +6,7 @@
         aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" [ngClass]="{ show: isExpanded }">
+      <div class="collapse navbar-collapse text-start" [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-Casino" [routerLink]="['/Roulette']">Roulette</a>
@@ -15,10 +15,13 @@
             <a class="nav-link text-Casino" [routerLink]="['/BlackJack']">BlackJack</a>
           </li>
         </ul>
-        <button *ngIf="isLogged; else elseLogged " class="btn btn-success">Login <span class="text-Casino">|</span> Sign
-          In</button>
-        <ng-template #elseLogged>
-          <div class="w-50 w-lg-25 p-0 mb-2 mb-lg-0 me-4 text-lg-end"> Welcome, <span class="text-danger">{{"Ulti"}}</span><br /> {{"1500"}}
+        <ng-template *ngIf="!isLogged; else Logged">
+          <a *ngIf="this.router.url != '/Login'" [routerLink]="['/Login']"><button class="btn btn-success">Login <span
+                class="text-Casino">|</span> Sign In</button></a>
+        </ng-template>
+        <ng-template #Logged>
+          <div class="w-50 w-lg-25 p-0 mb-2 mb-lg-0 me-4 text-lg-end"> Welcome, <span
+              class="text-danger">{{"Ulti"}}</span><br /> {{"1500"}}
             <img src="/assets/images/dolar.png" class="money-icon">
           </div>
           <a [routerLink]="['/Settings']">

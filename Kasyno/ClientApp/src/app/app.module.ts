@@ -12,6 +12,7 @@ import { RouletteComponent } from './roulette/roulette.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { CasinoStarComponent } from './casino-star/casino-star.component';
+import { LoginSignInComponent } from './login-sign-in/login-sign-in.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CasinoStarComponent } from './casino-star/casino-star.component';
     LoginComponent,
     RouletteComponent,
     SettingsComponent,
-    SignInComponent
+    SignInComponent,
+    LoginSignInComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -31,7 +33,8 @@ import { CasinoStarComponent } from './casino-star/casino-star.component';
       { path: '', component: CasinoStarComponent, pathMatch: 'full'},
       { path: 'BlackJack', component: BlackjackComponent },
       { path: 'Roulette', component: RouletteComponent },
-      { path: 'Settings', component: SettingsComponent }
+      { path: 'Settings', component: SettingsComponent },
+      { path: 'Login', component: LoginSignInComponent }
     ])
   ],
   providers: [],

@@ -1,0 +1,14 @@
+<div class="my-5">
+    <button (click)="ChangeView()" class="btn btn-outline-warning w-50 shadow">
+        <span *ngIf="isLogin; else RegistrationLabel">Go To Sign Up</span>
+        <ng-template #RegistrationLabel>
+            Go To Login
+        </ng-template>
+    </button>
+</div>
+<div>
+    <app-login *ngIf="isLogin; else Registration"></app-login>
+    <ng-template #Registration>
+        <app-sign-in></app-sign-in>
+    </ng-template>
+</div>

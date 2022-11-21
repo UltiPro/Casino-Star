@@ -24,18 +24,29 @@
     border-radius: 5px;
 }
 
+* {
+    outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border-color: none;
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 body,
 html {
-    height: 100%;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("/assets/background.jpg");
     color: rgb(var(--Casino-Text));
     font-size: 1.2rem;
     font-family: MainFont;
-    z-index: 1;
 }
 
 a,
@@ -43,25 +54,38 @@ a:focus,
 a:active {
     text-decoration: none;
     text-shadow: none;
+    transition: all .8s !important;
 }
 
 a:hover {
     text-shadow: -1px 0 darkgrey, 0 1px darkgrey, 1px 0 darkgrey, 0 -1px darkgrey;
 }
 
-.text-Casino {
-    color: rgb(var(--Casino-Text));
+button {
+    transition: all 1s !important;
 }
 
-.shadowText {
-    text-shadow: -1px 0 rgb(var(--Casino-Light-Border)), 0 1px rgb(var(--Casino-Light-Border)), 1px 0 rgb(var(--Casino-Light-Border)), 0 -1px rgb(var(--Casino-Light-Border));
+.background-CasinoStarImage {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: block;
+    background-image: url("/assets/background.jpg");
+    min-width: 100vw;
+    min-height: 100vh;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
 }
 
 .background-CasinoStar {
     position: fixed;
     left: 0;
     right: 0;
-    z-index: 2;
+    z-index: 3;
     display: block;
     background-color: rgba(0, 0, 0, 0.75);
     min-width: 100vw;
@@ -79,4 +103,16 @@ a:hover {
     right: 0;
     z-index: 9999;
     text-align: center;
+}
+
+.text-Casino {
+    color: rgb(var(--Casino-Text));
+}
+
+.shadowText {
+    text-shadow: -1px 0 rgb(var(--Casino-Light-Border)), 0 1px rgb(var(--Casino-Light-Border)), 1px 0 rgb(var(--Casino-Light-Border)), 0 -1px rgb(var(--Casino-Light-Border));
+}
+
+.icon {
+    width: 2rem;
 }
