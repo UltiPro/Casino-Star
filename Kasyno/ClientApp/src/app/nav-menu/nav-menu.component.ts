@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class NavMenuComponent {
   
   isExpanded = false;
-  isLogged = true;
+  isLogged = false;
   appName = "Casino Star"; // dokończ 
 
   constructor(public router: Router) { }
