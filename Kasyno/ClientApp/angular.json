@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "Kasyno"
+  "defaultProject": "Kasyno",
+  "cli": {
+    "analytics": "88a5b3ca-e56b-4ff7-a0c6-ee1eed7a56a4"
+  }
 }
