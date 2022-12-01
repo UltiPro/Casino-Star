@@ -13,6 +13,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { CasinoStarComponent } from './casino-star/casino-star.component';
 import { LoginSignInComponent } from './login-sign-in/login-sign-in.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -23,21 +26,25 @@ import { LoginSignInComponent } from './login-sign-in/login-sign-in.component';
     RouletteComponent,
     SettingsComponent,
     SignInComponent,
-    LoginSignInComponent
+    LoginSignInComponent,
+    NotFoundComponent
   ],
   imports: [
+
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: CasinoStarComponent, pathMatch: 'full'},
+      { path: '', component: CasinoStarComponent, pathMatch: 'full' },
       { path: 'BlackJack', component: BlackjackComponent },
       { path: 'Roulette', component: RouletteComponent },
       { path: 'Settings', component: SettingsComponent },
-      { path: 'Login', component: LoginSignInComponent }
+      { path: 'Login', component: LoginSignInComponent },
+      { path: '**', redirectTo: '/not-found' },
+      { path: 'not-found', component: NotFoundComponent }
     ])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [UserService],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,9 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  
   isExpanded = false;
+
+  @Output()
   isLogged = false;
+  
   appName = "Casino Star"; // dokończ 
 
   constructor(public router: Router) { }

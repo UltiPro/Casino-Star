@@ -58,6 +58,7 @@ a:active {
 }
 
 a:hover {
+    color: rgb(var(--Casino-Text));
     text-shadow: -1px 0 darkgrey, 0 1px darkgrey, 1px 0 darkgrey, 0 -1px darkgrey;
 }
 
