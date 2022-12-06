@@ -8,8 +8,13 @@ export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;
 }
 
+export function getBaseUrlUser() {
+  return "http://localhost:5000/api/User";
+}
+
 const providers = [
-  { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
+  { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
+  { provide: 'BASE_URL_API_USER', useFactory: getBaseUrlUser, deps: [] }
 ];
 
 if (environment.production) {

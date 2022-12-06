@@ -1,0 +1,22 @@
+<div class="d-flex justify-content-center">
+    <fieldset class="w-50 border border-warning rounded shadow-lg">
+        <form [formGroup]="loginForm" class="p-3" (ngSubmit)="onSubmit()">
+            <div class="input-group mt-2">
+                <label class="input-group-addon me-2" for="InputLogin"><img src="/assets/images/user.png"
+                        class="icon" /></label>
+                <input formControlName="InputLogin" type="text" class="form-control form-control-sm shadow"
+                    [ngClass]="loginForm.get('InputLogin')?.touched ? (loginForm.get('InputLogin')?.valid ? '' : 'is-invalid') : ''"
+                    [(ngModel)]='user.login' id="InputLogin" placeholder="Username">
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-addon me-2" for="InputPassword"><img src="/assets/images/password.png"
+                        class="icon" /></label>
+                <input formControlName="InputPassword" type="password" class="form-control form-control-sm shadow"
+                    [ngClass]="loginForm.get('InputPassword')?.touched ? (loginForm.get('InputPassword')?.valid ? '' : 'is-invalid') : ''"
+                    [(ngModel)]='user.password' id="InputPassword" placeholder="Password">
+            </div>
+            <button [disabled]="loginForm.invalid" type="submit"
+                class="btn btn-outline-warning w-100 mt-3 shadow">Login</button>
+        </form>
+    </fieldset>
+</div>

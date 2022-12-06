@@ -1,6 +1,6 @@
 USE [CasinoStar]
 GO
-CREATE PROCEDURE Users_InsertUser
+CREATE PROCEDURE InsertUser
     (
     @login VARCHAR(15),
     @password VARCHAR(320),
@@ -13,7 +13,6 @@ BEGIN
     Values
         (@login, @password, @email)
 END
-/*
 GO
 CREATE PROCEDURE Users_CheckEmail
     (
@@ -37,7 +36,7 @@ BEGIN
     WHERE Login = @login
 END
 GO
-CREATE PROCEDURE Users_GetUser
+CREATE PROCEDURE GetUser
     (
     @login VARCHAR(15)
 )
@@ -47,6 +46,7 @@ BEGIN
     FROM Users
     WHERE Login = @login
 END
+/*
 GO
 CREATE PROCEDURE Users_GetUserById
     (

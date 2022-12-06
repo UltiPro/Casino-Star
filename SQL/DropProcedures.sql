@@ -1,6 +1,6 @@
 USE [CasinoStar]
 GO
-DROP PROCEDURE Users_InsertUser
+DROP PROCEDURE InsertUser
 /*
 GO
 DROP PROCEDURE Users_CheckEmail

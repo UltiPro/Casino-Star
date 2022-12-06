@@ -6,10 +6,10 @@ import { UserService } from './services/user.service';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title : string = 'Casino Star';
+  title: string = 'Casino Star';
   isLogged: boolean;
 
-  constructor(private userService: UserService){
+  constructor(private userService: UserService) {
     this.isLogged = userService.getLoggedIn();
   }
 }
