@@ -1,8 +1,21 @@
+var  CasinoStarPolicy = "CasinoStarPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddCors(setup => { //to
+    setup.AddPolicy(name: CasinoStarPolicy, policy => {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(
+            "https://localhost:44447",
+            "http://localhost:44447",
+            "https://localhost:5050",
+            "http://localhost:5000"
+        );
+    });
+});
 
 var app = builder.Build();
 
@@ -16,6 +29,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseCors(CasinoStarPolicy); //to
 
 app.MapControllerRoute(
     name: "default",
