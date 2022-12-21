@@ -24,12 +24,12 @@ export class UserService {
     //this.#user = http.get();
     this.#loggedIn = true;
   }
-
+  
   logOut() {
     this.#user = null;
     this.#loggedIn = false;
   }
-
+  
   getLoggedIn = () => this.#loggedIn;
 
   //tutaj
