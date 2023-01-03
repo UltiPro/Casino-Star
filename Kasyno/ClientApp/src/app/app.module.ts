@@ -17,6 +17,7 @@ import { LoginSignInComponent } from './login-sign-in/login-sign-in.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AlertComponent } from './login-sign-in/alert/alert.component';
 import { OnlyForLogedComponent } from './only-for-loged/only-for-loged.component';
+import { CoinFlipComponent } from './coin-flip/coin-flip.component';
 
 import { UserService } from './services/user.service';
 
@@ -32,7 +33,8 @@ import { UserService } from './services/user.service';
     LoginSignInComponent,
     NotFoundComponent,
     AlertComponent,
-    OnlyForLogedComponent
+    OnlyForLogedComponent,
+    CoinFlipComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -43,6 +45,7 @@ import { UserService } from './services/user.service';
       { path: '', component: CasinoStarComponent, pathMatch: 'full' },
       { path: 'BlackJack', component: BlackjackComponent },
       { path: 'Roulette', component: RouletteComponent },
+      { path: 'Coin-Flip', component: CoinFlipComponent },
       { path: 'Settings', component: SettingsComponent },
       { path: 'Login', component: LoginSignInComponent },
       { path: '**', redirectTo: '/not-found' },
