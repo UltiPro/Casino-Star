@@ -1,1 +1,6 @@
-<p>blackjack works!</p>
+<div class="container" *ngIf="isLoged; else notLogged"> 
+    <p>blackjack works!</p>
+</div>
+<ng-template #notLogged>
+    <app-only-for-loged ></app-only-for-loged>
+</ng-template>

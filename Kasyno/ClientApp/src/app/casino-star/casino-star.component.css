@@ -1,5 +1,13 @@
+main {
+    margin-bottom: 100px;
+}
+
 header {
     overflow: hidden;
+}
+
+section {
+    background-color: rgba(10, 9, 8, .5);
 }
 
 li {

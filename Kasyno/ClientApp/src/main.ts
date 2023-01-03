@@ -9,7 +9,7 @@ export function getBaseUrl() {
 }
 
 export function getBaseUrlUser() {
-  return "http://localhost:5000/api/User";
+  return "http://localhost:5077/api/user";
 }
 
 const providers = [

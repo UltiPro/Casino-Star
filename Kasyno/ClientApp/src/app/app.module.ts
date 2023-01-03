@@ -16,6 +16,7 @@ import { CasinoStarComponent } from './casino-star/casino-star.component';
 import { LoginSignInComponent } from './login-sign-in/login-sign-in.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AlertComponent } from './login-sign-in/alert/alert.component';
+import { OnlyForLogedComponent } from './only-for-loged/only-for-loged.component';
 
 import { UserService } from './services/user.service';
 
@@ -30,7 +31,8 @@ import { UserService } from './services/user.service';
     SignInComponent,
     LoginSignInComponent,
     NotFoundComponent,
-    AlertComponent
+    AlertComponent,
+    OnlyForLogedComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

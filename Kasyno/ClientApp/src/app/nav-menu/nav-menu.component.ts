@@ -1,5 +1,6 @@
 import { Component, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from "../services/user.service"
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,10 +12,12 @@ export class NavMenuComponent {
 
   @Output()
   isLogged = false;
-  
-  appName = "Casino Star"; // dokończ 
 
-  constructor(public router: Router) { }
+  public appName: string = "Casino Star";
+
+  constructor(public router: Router, private userService: UserService) { 
+    this.isLogged = userService.getLoggedIn();
+  }
 
   collapse() {
     this.isExpanded = false;
