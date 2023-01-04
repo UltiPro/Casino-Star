@@ -1,4 +1,4 @@
-import { Component, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from "../services/user.service"
 
@@ -10,14 +10,9 @@ import { UserService } from "../services/user.service"
 export class NavMenuComponent {
   isExpanded = false;
 
-  @Output()
-  isLogged = false;
-
   public appName: string = "Casino Star";
 
-  constructor(public router: Router, private userService: UserService) { 
-    this.isLogged = userService.getLoggedIn();
-  }
+  constructor(public router: Router, public userService: UserService) { }
 
   collapse() {
     this.isExpanded = false;

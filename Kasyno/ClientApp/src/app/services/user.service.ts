@@ -1,27 +1,54 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { getBaseUrlUser } from 'src/main';
-import { User } from '../models/user/user.module';
+import { User, PostUser } from '../models/user/user.module';
 import { UserRegistration, PostUserRegistration } from '../models/user/userRegistration.module';
-import { UserLogin, PostUserLogin } from '../models/user/userLogin.module';
+import { UserLogin, PostUserLogin, PostUserLoginSuccess } from '../models/user/userLogin.module';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  #user: any = null;
+  user: User | null = null;
   #loggedIn: boolean = false;
+  #token: string | null = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.#token = window.localStorage.getItem("token");
+    const id = window.localStorage.getItem("id");
+    if (id != null && this.#token != null && this.#token?.length > 350) {
+      this.GetUserData(parseInt(id), this.#token).subscribe(answer => {
+        this.user = new User(answer.id, answer.login, answer.email, answer.money, answer.admin);
+      });
+      this.#loggedIn = true;
+    }
+  }
 
   getLoggedIn = () => this.#loggedIn;
 
-  LoginUser(userLogin: UserLogin): Observable<PostUserLogin> {
-    return this.http.put<PostUserLogin>(getBaseUrlUser() + "/login", userLogin);
-  }
-
   CreateUser(userRegistration: UserRegistration): Observable<PostUserRegistration> {
     return this.http.post<PostUserRegistration>(getBaseUrlUser() + "/register", userRegistration);
+  }
+
+  LoginUser(userLogin: UserLogin): Observable<PostUserLogin | PostUserLoginSuccess> {
+    return this.http.post<PostUserLogin | PostUserLoginSuccess>(getBaseUrlUser() + "/login", userLogin);
+  }
+
+  LoginUserComplete(token: string, user: User) {
+    this.user = user;
+    this.#loggedIn = true;
+    this.#token = token;
+    window.localStorage.setItem("token", JSON.stringify(this.#token));
+    window.localStorage.setItem("id", JSON.stringify(this.user.GetId()));
+  }
+
+  Logout() {
+    window.localStorage.clear();
+    this.#loggedIn = false;
+  }
+
+  GetUserData(id: number, token: string): Observable<PostUser> {
+    return this.http.post<PostUser>(getBaseUrlUser() + "/getuser", { id: id, token: token });
   }
 }

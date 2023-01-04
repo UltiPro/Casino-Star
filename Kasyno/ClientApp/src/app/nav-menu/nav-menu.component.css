@@ -4,13 +4,19 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-html {
-  font-size: 14px;
+header {
+  font-size: 1.2rem;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
+@media (max-width: 1455px) and (min-width: 1015px) {
+  header {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 992px) {
+  header {
+    font-size: 0.95rem;
   }
 }
 

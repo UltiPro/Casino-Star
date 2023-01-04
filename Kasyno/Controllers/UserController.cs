@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using AuthenticationJWT;
 using System.Text;
+using Models.TokenVerification;
 
 namespace Kasyno.Controllers;
 
@@ -52,7 +53,7 @@ public class UserController : ControllerBase
             return BadRequest(new { statusCode = false, message = "Error: " + e.Message });
         }
     }
-    [HttpGet("login")]
+    [HttpPost("login")]
     public IActionResult Login([FromBody] UserLogin user)
     {
         if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
@@ -71,8 +72,9 @@ public class UserController : ControllerBase
                     if (!Convert.ToBoolean(r["Active"])) return Ok(new { statusCode = false, message = "This account is not active" });
                     if (Convert.ToBoolean(r["Banned"])) return Ok(new { statusCode = false, message = "This account is banned" });
                     User userRequest = new User(Convert.ToInt32(r["Id"]), r["Login"].ToString(), r["Email"].ToString(), Convert.ToBoolean(r["Admin"]), Convert.ToInt32(r["Money"]));
-                    var token = JwtSecurityToken(userRequest);
-                    return Ok(new { statusCode = true, message = token });
+                    var tokenRequest = JwtSecurityToken(userRequest);
+                    if (UpdateToken(userRequest, tokenRequest)) Ok(new { statusCode = false, message = "Server do not work. Please contact to administrator!" });
+                    return Ok(new { statusCode = true, message = new { token = tokenRequest, user = userRequest } });
                 }
                 else return Ok(new { statusCode = false, message = "Incorrect password" });
             }
@@ -81,6 +83,33 @@ public class UserController : ControllerBase
         {
             Console.WriteLine(e.Message); // logger
             return BadRequest(new { statusCode = false, message = "Error " + e.Message });
+        }
+    }
+    [HttpPost("getuser")]
+    public JsonResult GetUser([FromBody] TokenVerification tokenVerification)
+    {
+        if(tokenVerification.token != null) tokenVerification.token = tokenVerification.token.Trim(new Char[] {'"'});
+        try
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("VerifyUser", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", tokenVerification.id);
+                cmd.Parameters.AddWithValue("@token", tokenVerification.token);
+                con.Open();
+                SqlDataReader r = cmd.ExecuteReader();
+                if (!r.Read()) return new JsonResult(new User(0, "", "", false, 0));
+                if (!Convert.ToBoolean(r["Active"])) return new JsonResult(new User(0, "", "", false, 0));
+                if (Convert.ToBoolean(r["Banned"])) return new JsonResult(new User(0, "", "", false, 0));
+                User userRequest = new User(Convert.ToInt32(r["Id"]), r["Login"].ToString(), r["Email"].ToString(), Convert.ToBoolean(r["Admin"]), Convert.ToInt32(r["Money"]));
+                return new JsonResult(userRequest);
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return new JsonResult(new User(0, "", "", false, 0));
         }
     }
     private bool Check(string storedProcedure, string indicator, string value)
@@ -124,5 +153,28 @@ public class UserController : ControllerBase
 
         var tokenHandler = new JwtSecurityTokenHandler();
         return tokenHandler.WriteToken(token);
+    }
+    private bool UpdateToken(User user, string token)
+    {
+        try
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SetToken", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", user.id);
+                cmd.Parameters.AddWithValue("@token", token);
+                con.Open();
+                SqlDataReader r = cmd.ExecuteReader();
+                if (!r.Read()) return false;
+                con.Close();
+            }
+            return true;
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return false;
+        }
     }
 }

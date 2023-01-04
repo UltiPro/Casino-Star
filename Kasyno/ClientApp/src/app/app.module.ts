@@ -18,6 +18,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AlertComponent } from './login-sign-in/alert/alert.component';
 import { OnlyForLogedComponent } from './only-for-loged/only-for-loged.component';
 import { CoinFlipComponent } from './coin-flip/coin-flip.component';
+import { RemoveAccountComponent } from './settings/remove-account/remove-account.component';
+import { RechargeAccountComponent } from './settings/recharge-account/recharge-account.component';
+
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserService } from './services/user.service';
 
@@ -34,13 +39,16 @@ import { UserService } from './services/user.service';
     NotFoundComponent,
     AlertComponent,
     OnlyForLogedComponent,
-    CoinFlipComponent
+    CoinFlipComponent,
+    RemoveAccountComponent,
+    RechargeAccountComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    AccordionModule,
     RouterModule.forRoot([
       { path: '', component: CasinoStarComponent, pathMatch: 'full' },
       { path: 'BlackJack', component: BlackjackComponent },

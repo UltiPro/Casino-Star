@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegexLogin, RegexPassword } from '../../validation';
-import { UserLogin } from '../../models/user/userLogin.module';
+import { UserLogin, PostUserLogin, PostUserLoginSuccess } from '../../models/user/userLogin.module';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user/user.module';
 
 @Component({
   selector: 'app-login',
@@ -32,11 +33,19 @@ export class LoginComponent {
   onSubmit(): void {
     this.userService.LoginUser(this.user).subscribe(status => {
       if (status.statusCode == false) {
+        status = status as PostUserLogin;
         this.statusCode.emit(status.statusCode);
         this.message.emit(status.message);
       }
       else {
-        this.router.navigateByUrl('<pathDefinedInRouteConfig>');
+        status = status as PostUserLoginSuccess;
+        this.userService.LoginUserComplete(status.message.token, new User(
+          status.message.user.id,
+          status.message.user.login,
+          status.message.user.email,
+          status.message.user.money,
+          status.message.user.admin));
+        this.router.navigateByUrl('');
       }
     });
   }

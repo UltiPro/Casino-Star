@@ -10,7 +10,7 @@
     <app-alert message="{{message}}" [styleToInsert]="statusCode ? 'bg-success' : 'bg-danger'"
         (statusCode)="reciveStatusCode($event)"></app-alert>
 </div>
-<app-login *ngIf="isLogin; else Registration"></app-login>
+<app-login *ngIf="isLogin; else Registration" (statusCode)="reciveStatusCode($event)" (message)="reciveMessage($event)"></app-login>
 <ng-template #Registration>
     <app-sign-in (statusCode)="reciveStatusCode($event)" (message)="reciveMessage($event)"></app-sign-in>
 </ng-template>
