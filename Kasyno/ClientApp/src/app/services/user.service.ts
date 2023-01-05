@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { getBaseUrlUser } from 'src/main';
 import { User, PostUser } from '../models/user/user.module';
 import { UserRegistration, PostUserRegistration } from '../models/user/userRegistration.module';
 import { UserLogin, PostUserLogin, PostUserLoginSuccess } from '../models/user/userLogin.module';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserService {
   #loggedIn: boolean = false;
   #token: string | null = null;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.#token = window.localStorage.getItem("token");
     const id = window.localStorage.getItem("id");
     if (id != null && this.#token != null && this.#token?.length > 350) {
@@ -46,9 +47,14 @@ export class UserService {
   Logout() {
     window.localStorage.clear();
     this.#loggedIn = false;
+    this.router.navigate(['/']);
   }
 
   GetUserData(id: number, token: string): Observable<PostUser> {
     return this.http.post<PostUser>(getBaseUrlUser() + "/getuser", { id: id, token: token });
+  }
+
+  RemoveAccount(password: string) {
+    return this.http.post(getBaseUrlUser() + "/getuser", { id: this.user?.GetId(), token: this.#token, password: password });
   }
 }

@@ -39,3 +39,11 @@ header {
 .money-icon{
   width: 1rem;
 }
+
+.rotate-animation button img{
+  transition: transform .6s ease-in-out;
+}
+
+.rotate-animation:hover button img{
+  transform: rotate(135deg);
+}

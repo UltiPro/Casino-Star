@@ -21,10 +21,11 @@ import { CoinFlipComponent } from './coin-flip/coin-flip.component';
 import { RemoveAccountComponent } from './settings/remove-account/remove-account.component';
 import { RechargeAccountComponent } from './settings/recharge-account/recharge-account.component';
 
-import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { UserService } from './services/user.service';
+
+import { MatExpansionModule } from '@angular/material/expansion';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { UserService } from './services/user.service';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    AccordionModule,
+    MatExpansionModule,
     RouterModule.forRoot([
       { path: '', component: CasinoStarComponent, pathMatch: 'full' },
       { path: 'BlackJack', component: BlackjackComponent },
@@ -59,6 +60,8 @@ import { UserService } from './services/user.service';
       { path: '**', redirectTo: '/not-found' },
       { path: 'not-found', component: NotFoundComponent }
     ]),
+    AccordionModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent],

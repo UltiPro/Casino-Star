@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-settings',
@@ -6,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
+  
+  panelOpenState = false;
 
-  constructor() { }
+  public isLoged: boolean;
+
+  constructor(private userService: UserService) { 
+    this.isLoged = userService.getLoggedIn();
+  }
 
 }

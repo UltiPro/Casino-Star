@@ -88,7 +88,7 @@ public class UserController : ControllerBase
     [HttpPost("getuser")]
     public JsonResult GetUser([FromBody] TokenVerification tokenVerification)
     {
-        if(tokenVerification.token != null) tokenVerification.token = tokenVerification.token.Trim(new Char[] {'"'});
+        if (tokenVerification.token != null) tokenVerification.token = tokenVerification.token.Trim(new Char[] { '"' });
         try
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -110,6 +110,59 @@ public class UserController : ControllerBase
         {
             Console.WriteLine(e.Message); // logger
             return new JsonResult(new User(0, "", "", false, 0));
+        }
+    }
+    [HttpDelete("deleteuser")]
+    public IActionResult DeleteUser([FromBody] TokenVerificationWithPassword tokenVerificationWithPassword)
+    {
+        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+        if (tokenVerificationWithPassword.token != null) tokenVerificationWithPassword.token = tokenVerificationWithPassword.token.Trim(new Char[] { '"' });
+        try
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("VerifyUser", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", tokenVerificationWithPassword.id);
+                cmd.Parameters.AddWithValue("@token", tokenVerificationWithPassword.token);
+                con.Open();
+                SqlDataReader r = cmd.ExecuteReader();
+                if (!r.Read()) return Ok(new { statusCode = false, message = "You are not permited to do this action. Please login again" });
+                if (BCrypt.Net.BCrypt.Verify(tokenVerificationWithPassword.password, r["Password"].ToString()))
+                {
+                    if (!Convert.ToBoolean(r["Active"])) return Ok(new { statusCode = false, message = "This account is not active, cannot be removed from database" });
+                    if (Convert.ToBoolean(r["Banned"])) return Ok(new { statusCode = false, message = "This account is banned, cannot be removed from database" });
+                    if (DeleteUserContinue(tokenVerificationWithPassword.id)) Ok(new { statusCode = false, message = "Something went wrong, please try later" });
+                    return Ok(new { statusCode = true, message = "Account has been deleted" });
+                }
+                else return Ok(new { statusCode = false, message = "Incorrect password" });
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return new JsonResult(new User(0, "", "", false, 0));
+        }
+    }
+    public bool DeleteUserContinue(int id)
+    {
+        try
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("RemoveUser", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", id);
+                con.Open();
+                SqlDataReader r = cmd.ExecuteReader();
+                if (!r.Read()) return false;
+                return true;
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return false;
         }
     }
     private bool Check(string storedProcedure, string indicator, string value)
