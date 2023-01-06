@@ -1,14 +1,18 @@
+<div [hidden]="statusCode == null" class="info-box col-5">
+    <app-info-alert message="{{message}}" [styleToInsert]="statusCode ? 'text-success' : 'text-danger'"
+        [styleToInsert2]="statusCode ? 'border-success' : 'border-danger'"
+        (statusCode)="reciveStatusCode($event)"></app-info-alert>
+</div>
 <div class="container" *ngIf="isLoged; else notLogged">
     <div class="container col-8 mt-5 p-0 bg-dark bg-opacity-50 border border-warning shadow-lg rounded-3">
         <mat-accordion>
             <mat-expansion-panel hideToggle disabled class="p-4 border-bottom border-warning pe-none">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title class="text-success">
                         Settings
                     </mat-panel-title>
                 </mat-expansion-panel-header>
             </mat-expansion-panel>
-    
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                 class="m-0 p-3 border-bottom border-warning">
                 <mat-expansion-panel-header class="bg-opacity-100">
@@ -16,9 +20,11 @@
                         Change Email
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="mt-3">content</div>
+                <div class="mt-3">
+                    <app-change-email (statusCode)="reciveStatusCode($event)"
+                        (message)="reciveMessage($event)"></app-change-email>
+                </div>
             </mat-expansion-panel>
-    
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                 class="m-0 p-3 border-bottom border-warning">
                 <mat-expansion-panel-header>
@@ -26,9 +32,11 @@
                         Change Password
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="mt-3">content</div>
+                <div class="mt-3">
+                    <app-change-password (statusCode)="reciveStatusCode($event)"
+                        (message)="reciveMessage($event)"></app-change-password>
+                </div>
             </mat-expansion-panel>
-    
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                 class="m-0 p-3 border-bottom border-warning">
                 <mat-expansion-panel-header>
@@ -36,9 +44,11 @@
                         Recharge Account
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="mt-3">content</div>
+                <div class="mt-3">
+                    <app-recharge-account (statusCode)="reciveStatusCode($event)"
+                        (message)="reciveMessage($event)"></app-recharge-account>
+                </div>
             </mat-expansion-panel>
-    
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                 class="m-0 p-3 border-bottom border-warning">
                 <mat-expansion-panel-header>
@@ -47,7 +57,8 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="mt-3">
-                    <app-remove-account></app-remove-account>
+                    <app-remove-account (statusCode)="reciveStatusCode($event)"
+                        (message)="reciveMessage($event)"></app-remove-account>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>

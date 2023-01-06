@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegexPassword } from '../../validation';
 import { UserService } from 'src/app/services/user.service';
@@ -10,14 +10,29 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class RemoveAccountComponent {
 
+  @Output()
+  statusCode = new EventEmitter<boolean>();
+
+  @Output()
+  message = new EventEmitter<string>();
+
   DeleteAccountForm: FormGroup = new FormGroup({
     InputPassword: new FormControl(null, [Validators.pattern(RegexPassword()), Validators.required])
   });
 
-  password: string | null = null;
+  constructor(private userService: UserService) { }
+
+  password: string = "";
 
   onSubmit(): void {
-    
+    this.userService.RemoveAccount(this.password).subscribe(status => {
+      if (status.statusCode == false) {
+        this.statusCode.emit(status.statusCode);
+        this.message.emit(status.message);
+      }
+      else {
+        this.userService.Logout();
+      }
+    });
   }
-
 }

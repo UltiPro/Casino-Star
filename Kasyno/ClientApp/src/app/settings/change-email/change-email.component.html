@@ -1,0 +1,22 @@
+<div class="d-flex justify-content-center">
+    <fieldset class="w-100 border border-white rounded shadow">
+        <form [formGroup]="ChangeEmailForm" class="p-3" (ngSubmit)="onSubmit()">
+            <div class="input-group mt-2">
+                <label class="input-group-addon me-2" for="InputEmail"><img src="/assets/images/email.png"
+                        class="icon" /></label>
+                <input formControlName="InputEmail" type="text" class="form-control form-control-sm shadow rounded"
+                    [ngClass]="ChangeEmailForm.get('InputEmail')?.touched ? (ChangeEmailForm.get('InputEmail')?.valid ? 'is-valid' : 'is-invalid') : ''"
+                    [(ngModel)]='email' id="InputEmail" placeholder="Old Email">
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-addon me-2" for="InputNewEmail"><img src="/assets/images/email.png"
+                        class="icon" /></label>
+                <input formControlName="InputNewEmail" type="text" class="form-control form-control-sm shadow rounded"
+                    [ngClass]="ChangeEmailForm.get('InputNewEmail')?.touched ? (ChangeEmailForm.get('InputNewEmail')?.valid ? 'is-valid' : 'is-invalid') : ''"
+                    [(ngModel)]='newEmail' id="InputNewEmail" placeholder="New Email">
+            </div>
+            <button [disabled]="ChangeEmailForm.invalid" type="submit"
+                class="btn btn-light text-dark w-100 mt-3 shadow">Change Email</button>
+        </form>
+    </fieldset>
+</div>

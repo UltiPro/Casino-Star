@@ -137,6 +137,16 @@ BEGIN
     UPDATE Users SET Email = @email WHERE Id = @id
 END
 GO
+CREATE PROCEDURE UpdateMoney
+    (
+    @id INT,
+    @value INT
+)
+AS
+BEGIN
+    UPDATE Users SET Money += @value WHERE Id = @id
+END
+GO
 CREATE PROCEDURE GetAllUsers
 AS
 BEGIN

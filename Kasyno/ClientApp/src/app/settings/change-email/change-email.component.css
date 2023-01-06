@@ -1,0 +1,22 @@
+fieldset {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+input {
+    color: white;
+    border-color: rgb(245, 245, 245);
+    background-color: rgba(245, 245, 245, .1);
+    transition: all 1s;
+}
+
+input:focus {
+    color: white;
+    border-color: white;
+    background-color: rgba(245, 245, 245, .2);
+    outline: none;
+    box-shadow: none;
+}
+
+button {
+    color: white;
+}

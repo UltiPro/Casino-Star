@@ -20,6 +20,9 @@ import { OnlyForLogedComponent } from './only-for-loged/only-for-loged.component
 import { CoinFlipComponent } from './coin-flip/coin-flip.component';
 import { RemoveAccountComponent } from './settings/remove-account/remove-account.component';
 import { RechargeAccountComponent } from './settings/recharge-account/recharge-account.component';
+import { ChangeEmailComponent } from './settings/change-email/change-email.component';
+import { ChangePasswordComponent } from './settings/change-password/change-password.component';
+import { InfoAlertComponent } from './settings/info-alert/info-alert.component';
 
 import { UserService } from './services/user.service';
 
@@ -42,7 +45,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     OnlyForLogedComponent,
     CoinFlipComponent,
     RemoveAccountComponent,
-    RechargeAccountComponent
+    RechargeAccountComponent,
+    ChangePasswordComponent,
+    ChangeEmailComponent,
+    InfoAlertComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

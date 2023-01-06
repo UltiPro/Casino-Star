@@ -1,5 +1,3 @@
-import { User } from "./user.module";
-
 export class UserLogin {
   constructor(public login: string, public password: string) { }
 }

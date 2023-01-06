@@ -6,7 +6,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./alert.component.css']
 })
 export class AlertComponent {
-
   @Input()
   styleToInsert: string = "";
 
