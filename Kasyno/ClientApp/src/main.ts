@@ -12,9 +12,14 @@ export function getBaseUrlUser() {
   return "http://localhost:5077/api/user";
 }
 
+export function getBaseUrlGames() {
+  return "http://localhost:5077/api/games";
+}
+
 const providers = [
   { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
-  { provide: 'BASE_URL_API_USER', useFactory: getBaseUrlUser, deps: [] }
+  { provide: 'BASE_URL_API_USER', useFactory: getBaseUrlUser, deps: [] },
+  { provide: 'BASE_URL_API_GAME', useFactory: getBaseUrlGames, deps: [] }
 ];
 
 if (environment.production) {

@@ -1,15 +1,15 @@
-﻿#pragma warning disable CS8601, CS8604, CS8618
+﻿#pragma warning disable CS8601, CS8604, CS8618, CS8602
 
+using System.Text;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.AspNetCore.Mvc;
-using Models.UserModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using AuthenticationJWT;
-using System.Text;
+using Models.UserModel;
 using Models.TokenVerification;
+using AuthenticationJWT;
 
 namespace Kasyno.Controllers;
 
@@ -219,8 +219,7 @@ public class UserController : ControllerBase
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", id);
                 con.Open();
-                SqlDataReader r = cmd.ExecuteReader();
-                if (!r.Read()) return false;
+                cmd.ExecuteNonQuery();
                 return true;
             }
         }
@@ -248,6 +247,7 @@ public class UserController : ControllerBase
                 if (!r.Read()) return Ok(new { statusCode = false, message = "You are not permited to do this action. Please login again" });
                 if (!Convert.ToBoolean(r["Active"])) return Ok(new { statusCode = false, message = "This account is not active, cannot be charged" });
                 if (Convert.ToBoolean(r["Banned"])) return Ok(new { statusCode = false, message = "This account is banned, cannot be charged" });
+                if (tokenVerificationWithAccountCharge.value < 0 && Convert.ToInt32(r["Money"]) + tokenVerificationWithAccountCharge.value < 0) Ok(new { statusCode = false, message = "You don't have enough funds to make this operation" });
                 if (ChargeAccountContinue(tokenVerificationWithAccountCharge.id, tokenVerificationWithAccountCharge.value)) Ok(new { statusCode = false, message = "Something went wrong, please try later" });
                 return Ok(new { statusCode = true, message = "Account has been charged successfuly" });
             }
@@ -270,7 +270,6 @@ public class UserController : ControllerBase
                 cmd.Parameters.AddWithValue("@value", value);
                 con.Open();
                 cmd.ExecuteNonQuery();
-                con.Close();
                 return true;
             }
         }
@@ -301,12 +300,9 @@ public class UserController : ControllerBase
                     if (!Convert.ToBoolean(r["Active"])) return Ok(new { statusCode = false, message = "This account is not active, cannot change password" });
                     if (Convert.ToBoolean(r["Banned"])) return Ok(new { statusCode = false, message = "This account is banned, cannot change password" });
                     if (ChangePasswordContinue(tokenVerificationWithPasswordChange.id, tokenVerificationWithPasswordChange.newPassword)) Ok(new { statusCode = false, message = "Something went wrong, please try later" });
-                    
-                    // tutaj
-                    
-                    return Ok(new { statusCode = true, message = "Password has been changed" });
+                    return Ok(new { statusCode = true, message = "Password has been changed. Please login again to have fully access on this service" });
                 }
-                else return Ok(new { statusCode = false, message = "Incorrect password" });
+                else return Ok(new { statusCode = false, message = "Incorrect old password" });
             }
         }
         catch (SqlException e)
@@ -324,7 +320,57 @@ public class UserController : ControllerBase
                 SqlCommand cmd = new SqlCommand("UpdatePassword", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@password", BCrypt.Net.BCrypt.HashPassword(password));
+                con.Open();
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return false;
+        }
+    }
+    [HttpPost("changeemail")]
+    public IActionResult ChangeEmail([FromBody] TokenVerificationWithEmailChange tokenVerificationWithEmailChange)
+    {
+        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+        if (tokenVerificationWithEmailChange.token != null) tokenVerificationWithEmailChange.token = tokenVerificationWithEmailChange.token.Trim(new Char[] { '"' });
+        try
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("VerifyUser", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", tokenVerificationWithEmailChange.id);
+                cmd.Parameters.AddWithValue("@token", tokenVerificationWithEmailChange.token);
+                con.Open();
+                SqlDataReader r = cmd.ExecuteReader();
+                if (!r.Read()) return Ok(new { statusCode = false, message = "You are not permited to do this action. Please login again" });
+                if (!Convert.ToBoolean(r["Active"])) return Ok(new { statusCode = false, message = "This account is not active, cannot change email" });
+                if (Convert.ToBoolean(r["Banned"])) return Ok(new { statusCode = false, message = "This account is banned, cannot change email" });
+                if (!Convert.ToString(r["Email"]).Equals(tokenVerificationWithEmailChange.oldEmail)) return Ok(new { statusCode = false, message = "Wrong old email" });
+                if (ChangeEmailContinue(tokenVerificationWithEmailChange.id, tokenVerificationWithEmailChange.newEmail)) Ok(new { statusCode = false, message = "Something went wrong, please try later" });
+                return Ok(new { statusCode = true, message = "Email has been changed" });
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return BadRequest(new { statusCode = false, message = "Error " + e.Message });
+        }
+    }
+    private bool ChangeEmailContinue(int id, string email)
+    {
+        try
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("UpdateEmail", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@email", email);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();

@@ -7,7 +7,7 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  
+
   panelOpenState = false;
 
   public statusCode: boolean | null;
@@ -15,7 +15,7 @@ export class SettingsComponent {
 
   public isLoged: boolean;
 
-  constructor(private userService: UserService) { 
+  constructor(private userService: UserService) {
     this.isLoged = userService.getLoggedIn();
     this.statusCode = null;
     this.message = "";
@@ -28,5 +28,4 @@ export class SettingsComponent {
   reciveMessage($event: any): void {
     this.message = $event as string;
   }
-
 }

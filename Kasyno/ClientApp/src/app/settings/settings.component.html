@@ -1,5 +1,5 @@
 <div [hidden]="statusCode == null" class="info-box col-5">
-    <app-info-alert message="{{message}}" [styleToInsert]="statusCode ? 'text-success' : 'text-danger'"
+    <app-info-alert message="{{message}}" messageTitle="Information" [styleToInsert]="statusCode ? 'text-success' : 'text-danger'"
         [styleToInsert2]="statusCode ? 'border-success' : 'border-danger'"
         (statusCode)="reciveStatusCode($event)"></app-info-alert>
 </div>

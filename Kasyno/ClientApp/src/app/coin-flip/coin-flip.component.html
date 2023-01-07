@@ -1,5 +1,58 @@
+<div [hidden]="statusCode == null" class="info-box col-4">
+    <app-info-alert message="{{message}}" messageTitle="{{messageTitle}}"
+        [styleToInsert]="statusCode ? 'text-success' : 'text-danger'"
+        [styleToInsert2]="statusCode ? 'border-success' : 'border-danger'"
+        (statusCode)="reciveStatusCode($event)"></app-info-alert>
+</div>
 <div class="container" *ngIf="isLoged; else notLogged">
-    <p>coin-flip works!</p>
+    <div class="row">
+        <div class="col-4">
+            <div class="container-translate container-menu w-25 p-3 bg-dark border border-warning rounded-3">
+                Choose a side
+                <hr />
+                <div class="container mt-4">
+                    <div class="golden-coin coin-select me-5" (click)="ChangeDecision(true)" #golden_coin></div>
+                    <div class="silver-coin ms-5" (click)="ChangeDecision(false)" #silver_coin></div>
+                    <form [formGroup]="AmmountForm" class="p-3 mt-4">
+                        <div class="input-group mt-2">
+                            <input formControlName="InputMoney" type="number" step="1"
+                                class="form-control form-control-sm border-2 border-warning rounded shadow-none"
+                                [ngClass]="AmmountForm.get('InputMoney')?.touched ? (AmmountForm.get('InputMoney')?.valid ? 'is-valid' : 'is-invalid') : ''"
+                                [(ngModel)]='moneyBetted' id="InputMoney" placeholder="Bet money">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="container-translate container-coin">
+                <div class="coin" [@coin]="state">
+                    <div class="side-a"></div>
+                    <div class="side-b"></div>
+                </div>
+            </div>
+            <div class="container-translate container-game">
+                <div class="btn-group bold">
+                    <button type="button" class="btn btn-outline-success text-white border-3 shadow-none"
+                        (click)="LounchGame(1)">1x</button>
+                    <button type="button"
+                        class="btn btn-outline-success text-white border-3 border-end-0 border-start-0 shadow-none"
+                        (click)="LounchGame(2)">2x</button>
+                    <button type="button" class="btn btn-outline-success text-white border-3 shadow-none"
+                        (click)="LounchGame(5)">5x</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="container-translate container-score w-25 p-3 bg-dark border border-warning rounded-3">
+                Change of Winning
+                <hr />
+                1x - 50%<br />
+                2x - 25%<br />
+                5x - 10%<br />
+            </div>
+        </div>
+    </div>
 </div>
 <ng-template #notLogged>
     <app-only-for-loged></app-only-for-loged>

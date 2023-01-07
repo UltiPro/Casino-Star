@@ -12,6 +12,7 @@
 # IDEs and editors
 /.idea
 .project
+.angular
 .classpath
 .c9/
 *.launch

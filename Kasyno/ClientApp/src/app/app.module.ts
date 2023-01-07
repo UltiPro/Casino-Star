@@ -22,9 +22,10 @@ import { RemoveAccountComponent } from './settings/remove-account/remove-account
 import { RechargeAccountComponent } from './settings/recharge-account/recharge-account.component';
 import { ChangeEmailComponent } from './settings/change-email/change-email.component';
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
-import { InfoAlertComponent } from './settings/info-alert/info-alert.component';
+import { InfoAlertComponent } from './info-alert/info-alert.component';
 
 import { UserService } from './services/user.service';
+import { GamesService } from './services/games.service';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
@@ -69,7 +70,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AccordionModule.forRoot(),
     BrowserAnimationsModule
   ],
-  providers: [UserService],
+  providers: [UserService, GamesService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

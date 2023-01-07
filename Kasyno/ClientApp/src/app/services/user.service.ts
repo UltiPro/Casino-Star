@@ -6,7 +6,7 @@ import { User, PostUser } from '../models/user/user.module';
 import { UserRegistration, PostUserRegistration } from '../models/user/userRegistration.module';
 import { UserLogin, PostUserLogin, PostUserLoginSuccess } from '../models/user/userLogin.module';
 import { Router } from '@angular/router';
-import { PostAnswer } from 'src/app/models/user/answer.module';
+import { PostAnswer } from 'src/app/models/answer.module';
 
 @Injectable({
   providedIn: 'root'
