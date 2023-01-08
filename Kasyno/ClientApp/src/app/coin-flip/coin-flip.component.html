@@ -16,7 +16,7 @@
                     <form [formGroup]="AmmountForm" class="p-3 mt-4">
                         <div class="input-group mt-2">
                             <input formControlName="InputMoney" type="number" step="1"
-                                class="form-control form-control-sm border-2 border-warning rounded shadow-none"
+                                class="form-control form-control-sm text-light bg-secondary bg-opacity-50 border-2 border-warning rounded shadow-none"
                                 [ngClass]="AmmountForm.get('InputMoney')?.touched ? (AmmountForm.get('InputMoney')?.valid ? 'is-valid' : 'is-invalid') : ''"
                                 [(ngModel)]='moneyBetted' id="InputMoney" placeholder="Bet money">
                         </div>
@@ -34,12 +34,15 @@
             <div class="container-translate container-game">
                 <div class="btn-group bold">
                     <button type="button" class="btn btn-outline-success text-white border-3 shadow-none"
-                        (click)="LounchGame(1)">1x</button>
+                        (click)="LounchGame(2)"
+                        [disabled]="this.statusCode != null || this.blockOfGame || !(AmmountForm.get('InputMoney')?.touched && AmmountForm.get('InputMoney')?.valid)">2x</button>
                     <button type="button"
                         class="btn btn-outline-success text-white border-3 border-end-0 border-start-0 shadow-none"
-                        (click)="LounchGame(2)">2x</button>
+                        (click)="LounchGame(4)"
+                        [disabled]="this.statusCode != null || this.blockOfGame || !(AmmountForm.get('InputMoney')?.touched && AmmountForm.get('InputMoney')?.valid)">4x</button>
                     <button type="button" class="btn btn-outline-success text-white border-3 shadow-none"
-                        (click)="LounchGame(5)">5x</button>
+                        (click)="LounchGame(10)"
+                        [disabled]="this.statusCode != null || this.blockOfGame || !(AmmountForm.get('InputMoney')?.touched && AmmountForm.get('InputMoney')?.valid)">10x</button>
                 </div>
             </div>
         </div>
@@ -47,9 +50,9 @@
             <div class="container-translate container-score w-25 p-3 bg-dark border border-warning rounded-3">
                 Change of Winning
                 <hr />
-                1x - 50%<br />
-                2x - 25%<br />
-                5x - 10%<br />
+                2x - 50%<br />
+                4x - 25%<br />
+                10x - 10%<br />
             </div>
         </div>
     </div>

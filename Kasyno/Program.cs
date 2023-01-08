@@ -13,7 +13,7 @@ builder.Services.AddCors(policy =>
     });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddControllersAsServices();
 
 var authenticationJwtSettings = new AuthenticationJwtSettings();
 builder.Configuration.GetSection("Authentication").Bind(authenticationJwtSettings);

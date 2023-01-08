@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Models.UserModel;
 
@@ -21,5 +22,10 @@ public class User
         this.email = email;
         this.admin = admin;
         this.money = money;
+    }
+
+    public static explicit operator User(JsonResult v)
+    {
+        throw new NotImplementedException();
     }
 }

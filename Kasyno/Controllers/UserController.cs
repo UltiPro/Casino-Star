@@ -27,7 +27,7 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register([FromBody] UserRegistration user)
     {
-        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
         try
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -50,13 +50,13 @@ public class UserController : ControllerBase
                 if (Check("Users_CheckLogin", "@login", user.login)) return Ok(new { statusCode = false, message = "This login is used" });
                 if (Check("Users_CheckEmail", "@email", user.email)) return Ok(new { statusCode = false, message = "This email is used" });
             }
-            return BadRequest(new { statusCode = false, message = "Error: " + e.Message });
+            return Ok(new { statusCode = false, message = "Error: " + e.Message });
         }
     }
     [HttpPost("login")]
     public IActionResult Login([FromBody] UserLogin user)
     {
-        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
         try
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -82,7 +82,7 @@ public class UserController : ControllerBase
         catch (SqlException e)
         {
             Console.WriteLine(e.Message); // logger
-            return BadRequest(new { statusCode = false, message = "Error " + e.Message });
+            return Ok(new { statusCode = false, message = "Error " + e.Message });
         }
     }
     private bool Check(string storedProcedure, string indicator, string value)
@@ -180,7 +180,7 @@ public class UserController : ControllerBase
     [HttpPost("deleteuser")]
     public IActionResult DeleteUser([FromBody] TokenVerificationWithPassword tokenVerificationWithPassword)
     {
-        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
         if (tokenVerificationWithPassword.token != null) tokenVerificationWithPassword.token = tokenVerificationWithPassword.token.Trim(new Char[] { '"' });
         try
         {
@@ -206,7 +206,7 @@ public class UserController : ControllerBase
         catch (SqlException e)
         {
             Console.WriteLine(e.Message); // logger
-            return BadRequest(new { statusCode = false, message = "Error " + e.Message });
+            return Ok(new { statusCode = false, message = "Error " + e.Message });
         }
     }
     private bool DeleteUserContinue(int id)
@@ -232,7 +232,7 @@ public class UserController : ControllerBase
     [HttpPost("rechargeaccount")]
     public IActionResult ChargeAccount([FromBody] TokenVerificationWithAccountCharge tokenVerificationWithAccountCharge)
     {
-        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
         if (tokenVerificationWithAccountCharge.token != null) tokenVerificationWithAccountCharge.token = tokenVerificationWithAccountCharge.token.Trim(new Char[] { '"' });
         try
         {
@@ -247,7 +247,6 @@ public class UserController : ControllerBase
                 if (!r.Read()) return Ok(new { statusCode = false, message = "You are not permited to do this action. Please login again" });
                 if (!Convert.ToBoolean(r["Active"])) return Ok(new { statusCode = false, message = "This account is not active, cannot be charged" });
                 if (Convert.ToBoolean(r["Banned"])) return Ok(new { statusCode = false, message = "This account is banned, cannot be charged" });
-                if (tokenVerificationWithAccountCharge.value < 0 && Convert.ToInt32(r["Money"]) + tokenVerificationWithAccountCharge.value < 0) Ok(new { statusCode = false, message = "You don't have enough funds to make this operation" });
                 if (ChargeAccountContinue(tokenVerificationWithAccountCharge.id, tokenVerificationWithAccountCharge.value)) Ok(new { statusCode = false, message = "Something went wrong, please try later" });
                 return Ok(new { statusCode = true, message = "Account has been charged successfuly" });
             }
@@ -255,10 +254,10 @@ public class UserController : ControllerBase
         catch (SqlException e)
         {
             Console.WriteLine(e.Message); // logger
-            return BadRequest(new { statusCode = false, message = "Error " + e.Message });
+            return Ok(new { statusCode = false, message = "Error " + e.Message });
         }
     }
-    private bool ChargeAccountContinue(int id, int value)
+    public bool ChargeAccountContinue(int id, int value)
     {
         try
         {
@@ -282,7 +281,7 @@ public class UserController : ControllerBase
     [HttpPost("changepassword")]
     public IActionResult ChangePassword([FromBody] TokenVerificationWithPasswordChange tokenVerificationWithPasswordChange)
     {
-        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
         if (tokenVerificationWithPasswordChange.token != null) tokenVerificationWithPasswordChange.token = tokenVerificationWithPasswordChange.token.Trim(new Char[] { '"' });
         try
         {
@@ -308,7 +307,7 @@ public class UserController : ControllerBase
         catch (SqlException e)
         {
             Console.WriteLine(e.Message); // logger
-            return BadRequest(new { statusCode = false, message = "Error " + e.Message });
+            return Ok(new { statusCode = false, message = "Error " + e.Message });
         }
     }
     private bool ChangePasswordContinue(int id, string password)
@@ -335,7 +334,7 @@ public class UserController : ControllerBase
     [HttpPost("changeemail")]
     public IActionResult ChangeEmail([FromBody] TokenVerificationWithEmailChange tokenVerificationWithEmailChange)
     {
-        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
         if (tokenVerificationWithEmailChange.token != null) tokenVerificationWithEmailChange.token = tokenVerificationWithEmailChange.token.Trim(new Char[] { '"' });
         try
         {
@@ -358,7 +357,7 @@ public class UserController : ControllerBase
         catch (SqlException e)
         {
             Console.WriteLine(e.Message); // logger
-            return BadRequest(new { statusCode = false, message = "Error " + e.Message });
+            return Ok(new { statusCode = false, message = "Error " + e.Message });
         }
     }
     private bool ChangeEmailContinue(int id, string email)
