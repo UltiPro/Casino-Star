@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models.CoinFlip;
 using Models.TokenVerification;
 using Models.UserModel;
-using Models.RouletteColor;
+using Models.Roulette;
 
 namespace Kasyno.Controllers;
 
@@ -41,6 +41,31 @@ public class GamesController : ControllerBase
                 bool allowed = userController.ChargeAccountContinue(coinFlipRequest.id, coinFlipRequest.betMoney * (-1));
                 if (allowed) return Ok(new { statusCode = false, message = "You lost " + coinFlipRequest.betMoney + " dollars" });
                 else return Ok(new { statusCode = false, message = "Something went wrong, please try later" });
+            }
+        }
+    }
+    [HttpPost("roulettenumber")]
+    public IActionResult RouletteNumber([FromBody] RouletteNumberRequest rouletteNumberRequest)
+    {
+        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState, number = -1 });
+        JsonResult answer = userController.GetUser(new TokenVerification(rouletteNumberRequest.id, rouletteNumberRequest.token));
+        User? user = answer.Value as User;
+        if (user?.money < rouletteNumberRequest.betMoney) return Ok(new { statusCode = false, message = "You don't have enough funds to make this operation", number = -1 });
+        else
+        {
+            int score = GetRouletteNumber();
+            if (score == rouletteNumberRequest.decision)
+            {
+                int winPrize = rouletteNumberRequest.betMoney * 10;
+                bool allowed = userController.ChargeAccountContinue(rouletteNumberRequest.id, winPrize);
+                if (allowed) return Ok(new { statusCode = true, message = "You won " + winPrize + " dollars", number = score });
+                else return Ok(new { statusCode = false, message = "Something went wrong, please try later", number = -1 });
+            }
+            else
+            {
+                bool allowed = userController.ChargeAccountContinue(rouletteNumberRequest.id, rouletteNumberRequest.betMoney * (-1));
+                if (allowed) return Ok(new { statusCode = false, message = "You lost " + rouletteNumberRequest.betMoney + " dollars", number = score });
+                else return Ok(new { statusCode = false, message = "Something went wrong, please try later", number = -1 });
             }
         }
     }
@@ -85,7 +110,7 @@ public class GamesController : ControllerBase
     {
         if (color.Equals("red")) return 2;
         else if (color.Equals("black")) return 2;
-        else if (color.Equals("green")) return 2;
+        else if (color.Equals("green")) return 10;
         else return 1;
     }
 }

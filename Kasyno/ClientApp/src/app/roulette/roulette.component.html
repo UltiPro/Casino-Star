@@ -107,13 +107,13 @@
                         </div>
                         <button [disabled]="FirstForm.invalid" type="submit"
                             class="btn btn-danger w-100 mt-3 border border-warning shadow-lg"
-                            #buttonFirst>Start</button>
+                            #buttonFirst [disabled]="this.blockOfGame">Start</button>
                     </form>
                 </div>
             </div>
             <div class="col-4 m-auto mt-3 h-25">
                 <div class="p-3 bg-dark bg-gradient border border-warning rounded-3">
-                    <form [formGroup]="SecondForm" class="p-3 pt-0" (ngSubmit)="onSubmitFirst()">
+                    <form [formGroup]="SecondForm" class="p-3 pt-0" (ngSubmit)="onSubmitSecond()">
                         <div class="input-group mt-1">
                             <input formControlName="InputNumber" type="number" step="1"
                                 class="form-control form-control-sm text-light bg-dark bg-opacity-50 border-2 border-warning rounded shadow-none"
@@ -129,8 +129,8 @@
                                 [(ngModel)]='moneyBettedSecond' id="InputMoney" placeholder="Bet money">
                         </div>
                         <button [disabled]="SecondForm.invalid" type="submit"
-                            class="btn btn-danger w-100 mt-3 border border-warning shadow-lg"
-                            #buttonFirst>Start</button>
+                            class="btn btn-outline-warning w-100 mt-3 border border-warning shadow-lg"
+                            #buttonSecond [disabled]="this.blockOfGame">Start</button>
                     </form>
                 </div>
             </div>

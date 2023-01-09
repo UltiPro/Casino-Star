@@ -16,7 +16,7 @@ export class RechargeAccountComponent {
   message = new EventEmitter<string>();
 
   RechargeAccountForm: FormGroup = new FormGroup({
-    InputMoney: new FormControl(null, [Validators.max(1000), Validators.min(1), Validators.required])
+    InputMoney: new FormControl(null, [Validators.max(1000000), Validators.min(1), Validators.required])
   });
 
   constructor(private userService: UserService) { }

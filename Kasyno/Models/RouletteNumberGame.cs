@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models.Roulette;
 
-public class RouletteColorRequest
+public class RouletteNumberRequest
 {
     [Required]
     [Display(Name = "id")]
@@ -14,7 +14,7 @@ public class RouletteColorRequest
     public string? token { get; set; }
     [Required]
     [Display(Name = "decision")]
-    public string decision { get; set; }
+    public int decision { get; set; }
     [Required]
     [Display(Name = "betMoney")]
     public int betMoney { get; set; }

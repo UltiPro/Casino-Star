@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GamesService } from '../services/games.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { PostAnswerWithAngle } from '../models/answer.module';
 
 @Component({
   selector: 'app-roulette',
@@ -16,8 +17,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
       state('2', style({
         transform: 'translate(-50%,-50%) rotate({{angle}}deg)'
       }), { params: { angle: 180 } }),
-      transition('1 => 2', animate(7000)),
-      transition('1 => 3', animate(7000))
+      transition('1 => 2', animate('7s ease-out'))
     ])
   ]
 })
@@ -32,7 +32,7 @@ export class RouletteComponent {
   public messageTitle: string;
 
   public choosenColor: string = 'red';
-  public numberBetted: number | null = null;
+  public numberBetted: number;
 
   public moneyBettedFirst: number | null = null;
   public moneyBettedSecond: number | null = null;
@@ -70,32 +70,43 @@ export class RouletteComponent {
   onSubmitFirst() {
     if (this.blockOfGame) return;
     else {
+      this.state = '1';
       this.blockOfGame = true;
       this.gameService.RouletteColor(this.userService.user?.GetId() as number, this.userService.token as string, this.choosenColor, this.moneyBettedFirst as number).subscribe(status => {
-        this.angle = 90 + (this.numbersAngles.findIndex(e => e == status.number)) * 10 + (360 * Math.floor(Math.random() * 10 + 1));
-        if (status.statusCode == true) {
-          this.messageTitle = "Congratulations";
-        }
-        else {
-          this.messageTitle = "Better luck next time";
-        }
-        this.state = '2';
-        setTimeout(() => {
-          this.playAudio(status.statusCode);
-          this.statusCode = status.statusCode;
-          this.message = status.message;
-          this.userService.RefreshUser();
-        }, 7500)
-        setTimeout(() => {
-          this.blockOfGame = false;
-          this.state = '1';
-        }, 10500);
+        this.ContinueGame(status);
       });
     }
   }
 
   onSubmitSecond() {
+    if (this.blockOfGame) return;
+    else {
+      this.state = '1';
+      this.blockOfGame = true;
+      this.gameService.RouletteNumber(this.userService.user?.GetId() as number, this.userService.token as string, this.numberBetted, this.moneyBettedSecond as number).subscribe(status => {
+        this.ContinueGame(status);
+      });
+    }
+  }
 
+  ContinueGame(status : PostAnswerWithAngle){
+    this.angle = 90 + (this.numbersAngles.findIndex(e => e == status.number)) * 10 + (360 * Math.floor(Math.random() * 10 + 1));
+    if (status.statusCode == true) {
+      this.messageTitle = "Congratulations";
+    }
+    else {
+      this.messageTitle = "Better luck next time";
+    }
+    this.state = '2';
+    setTimeout(() => {
+      this.playAudio(status.statusCode);
+      this.statusCode = status.statusCode;
+      this.message = status.message;
+      this.userService.RefreshUser();
+    }, 7500)
+    setTimeout(() => {
+      this.blockOfGame = false;
+    }, 10500);
   }
 
   ChangeColor(color: string) {
