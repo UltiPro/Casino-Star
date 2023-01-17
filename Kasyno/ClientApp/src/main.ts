@@ -16,6 +16,10 @@ export function getBaseUrlGames() {
   return "http://localhost:5077/api/games";
 }
 
+export function getBaseUrlAdmin() {
+  return "http://localhost:5077/api/admin";
+}
+
 const providers = [
   { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
   { provide: 'BASE_URL_API_USER', useFactory: getBaseUrlUser, deps: [] },

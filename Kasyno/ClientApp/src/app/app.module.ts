@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { BlackjackComponent } from './blackjack/blackjack.component';
 import { LoginComponent } from './login-sign-in/login/login.component';
 import { RouletteComponent } from './roulette/roulette.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -23,6 +22,7 @@ import { RechargeAccountComponent } from './settings/recharge-account/recharge-a
 import { ChangeEmailComponent } from './settings/change-email/change-email.component';
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { InfoAlertComponent } from './info-alert/info-alert.component';
+import { AdminPanelComponent } from './settings/admin-panel/admin-panel.component';
 
 import { UserService } from './services/user.service';
 import { GamesService } from './services/games.service';
@@ -35,7 +35,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     NavMenuComponent,
-    BlackjackComponent,
     LoginComponent,
     RouletteComponent,
     SettingsComponent,
@@ -49,7 +48,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RechargeAccountComponent,
     ChangePasswordComponent,
     ChangeEmailComponent,
-    InfoAlertComponent
+    InfoAlertComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -59,11 +59,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatExpansionModule,
     RouterModule.forRoot([
       { path: '', component: CasinoStarComponent, pathMatch: 'full' },
-      { path: 'BlackJack', component: BlackjackComponent },
       { path: 'Roulette', component: RouletteComponent },
       { path: 'Coin-Flip', component: CoinFlipComponent },
       { path: 'Settings', component: SettingsComponent },
       { path: 'Login', component: LoginSignInComponent },
+      { path: 'Admin-Panel', component: AdminPanelComponent },
       { path: '**', redirectTo: '/not-found' },
       { path: 'not-found', component: NotFoundComponent }
     ]),

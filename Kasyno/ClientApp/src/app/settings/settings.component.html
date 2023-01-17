@@ -61,6 +61,19 @@
                         (message)="reciveMessage($event)"></app-remove-account>
                 </div>
             </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+            class="m-0 p-3 border-bottom border-warning" *ngIf="this.isAdmin">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="text-primary">
+                    Admin Panel
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a class="text-Casino" [routerLink]="['../Admin-Panel']" routerLinkActive="router-link-active">
+                <div class="admin-panel btn btn-primary py-1 px-5 border border-2 rounded">
+                    Admin Panel
+                </div>
+            </a>
+            </mat-expansion-panel>
         </mat-accordion>
     </div>
 </div>

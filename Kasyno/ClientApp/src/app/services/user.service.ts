@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { getBaseUrlUser } from 'src/main';
 import { User, PostUser } from '../models/user/user.module';
@@ -14,6 +14,7 @@ import { PostAnswer } from 'src/app/models/answer.module';
 export class UserService {
   user: User | null = null;
   #loggedIn: boolean = false;
+  #adminUser: boolean = false;
   token: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -21,6 +22,8 @@ export class UserService {
   }
 
   getLoggedIn = () => this.#loggedIn;
+
+  getAdminUser = () => this.#adminUser;
 
   CreateUser(userRegistration: UserRegistration): Observable<PostUserRegistration> {
     return this.http.post<PostUserRegistration>(getBaseUrlUser() + "/register", userRegistration);
@@ -34,6 +37,7 @@ export class UserService {
     this.user = user;
     this.#loggedIn = true;
     this.token = token;
+    this.#adminUser = user.GetAdmin();
     window.localStorage.setItem("token", JSON.stringify(this.token));
     window.localStorage.setItem("id", JSON.stringify(this.user.GetId()));
   }
@@ -56,6 +60,7 @@ export class UserService {
         this.user = new User(answer.id, answer.login, answer.email, answer.money, answer.admin);
       });
       this.#loggedIn = true;
+      this.#adminUser = this.user?.GetAdmin() ? true : false;
     }
   }
 

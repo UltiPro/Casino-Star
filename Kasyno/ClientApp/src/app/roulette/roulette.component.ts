@@ -56,6 +56,7 @@ export class RouletteComponent {
   });
 
   constructor(private userService: UserService, private gameService: GamesService) {
+    userService.RefreshUser();
     this.isLoged = userService.getLoggedIn();
     this.audioWin.src = "../../assets/win.mp3";
     this.audioLose.src = "../../assets/lose.mp3";

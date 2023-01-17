@@ -23,9 +23,4 @@ public class User
         this.admin = admin;
         this.money = money;
     }
-
-    public static explicit operator User(JsonResult v)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -1,5 +1,5 @@
 export class User {
-  constructor(private id: number, private login: string, private email: string, private money: number, private admin: boolean) { }
+  constructor(protected id: number, protected login: string, protected email: string, protected money: number, protected admin: boolean) { }
   GetId = (): number => this.id;
   SetId = (id: number): any => this.id = id;
   GetName = (): string => this.login;

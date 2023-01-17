@@ -12,7 +12,9 @@ export class NavMenuComponent {
 
   public appName: string = "Casino Star";
 
-  constructor(public router: Router, public userService: UserService) { }
+  constructor(public router: Router, public userService: UserService) { 
+    userService.RefreshUser();
+  }
 
   collapse() {
     this.isExpanded = false;
