@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Models.RequestAdmin;
+namespace Models.RequestAdminMoney;
 
-public class RequestAdmin
+public class RequestAdminMoney
 {
     [Required]
     [Display(Name = "idAdmin")]
@@ -13,10 +13,14 @@ public class RequestAdmin
     [Required]
     [Display(Name = "idUser")]
     public int idTarget { get; set; }
-    public RequestAdmin(int idAdmin, string token, int idTarget)
+    [Required]
+    [Display(Name = "money")]
+    public int money { get; set; }
+    public RequestAdminMoney(int idAdmin, string token, int idTarget, int money)
     {
         this.idAdmin = idAdmin;
         this.idTarget = idTarget;
         this.token = token;
+        this.money = money;
     }
 }

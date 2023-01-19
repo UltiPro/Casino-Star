@@ -14,13 +14,8 @@ export class SettingsComponent {
   public statusCode: boolean | null;
   public message: string;
 
-  public isLoged: boolean;
-  public isAdmin: boolean;
-
-  constructor(private userService: UserService, public router: Router) {
+  constructor(protected userService: UserService, public router: Router) {
     userService.RefreshUser();
-    this.isLoged = userService.getLoggedIn();
-    this.isAdmin = userService.getAdminUser();
     this.statusCode = null;
     this.message = "";
   }

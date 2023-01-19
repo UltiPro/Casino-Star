@@ -24,7 +24,6 @@ import { PostAnswerWithAngle } from '../models/answer.module';
 export class RouletteComponent {
   public state: string = '1';
 
-  public isLoged: boolean;
   public blockOfGame = false;
 
   public statusCode: boolean | null;
@@ -55,9 +54,8 @@ export class RouletteComponent {
     InputNumber: new FormControl(null, [Validators.min(0), Validators.max(36), Validators.required])
   });
 
-  constructor(private userService: UserService, private gameService: GamesService) {
+  constructor(protected userService: UserService, private gameService: GamesService) {
     userService.RefreshUser();
-    this.isLoged = userService.getLoggedIn();
     this.audioWin.src = "../../assets/win.mp3";
     this.audioLose.src = "../../assets/lose.mp3";
     this.audioWin.load();

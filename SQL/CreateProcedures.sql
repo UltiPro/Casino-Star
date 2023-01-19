@@ -78,32 +78,29 @@ END
 GO
 CREATE PROCEDURE UpdateActive
     (
-    @id INT,
-    @set BIT
+    @id INT
 )
 AS
 BEGIN
-    UPDATE Users SET Active = @set WHERE Id = @id
+    UPDATE Users SET Active = IIF(Active = 1,0,1) WHERE Id = @id
 END
 GO
 CREATE PROCEDURE UpdateBanned
     (
-    @id INT,
-    @set BIT
+    @id INT
 )
 AS
 BEGIN
-    UPDATE Users SET Banned = @set WHERE Id = @id
+    UPDATE Users SET Banned = IIF(Banned = 1,0,1) WHERE Id = @id
 END
 GO
 CREATE PROCEDURE UpdateAdmin
     (
-    @id INT,
-    @set BIT
+    @id INT
 )
 AS
 BEGIN
-    UPDATE Users SET Admin = @set WHERE Id = @id
+    UPDATE Users SET Admin = IIF(Admin = 1,0,1) WHERE Id = @id
 END
 GO
 CREATE PROCEDURE UpdatePassword
@@ -145,6 +142,16 @@ CREATE PROCEDURE UpdateMoney
 AS
 BEGIN
     UPDATE Users SET Money += @value WHERE Id = @id
+END
+GO
+CREATE PROCEDURE UpdateMoneyNewSet
+    (
+    @id INT,
+    @value INT
+)
+AS
+BEGIN
+    UPDATE Users SET Money = @value WHERE Id = @id
 END
 GO
 CREATE PROCEDURE GetAllUsers

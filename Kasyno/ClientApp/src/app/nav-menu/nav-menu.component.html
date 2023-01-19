@@ -15,7 +15,7 @@
             <a class="nav-link text-Casino" [routerLink]="['/Coin-Flip']">Coin-Flip</a>
           </li>
         </ul>
-        <div *ngIf="!userService.getLoggedIn(); else Logged">
+        <div *ngIf="!userService.loggedIn else Logged">
           <a *ngIf="this.router.url != '/Login'" [routerLink]="['/Login']"><button class="btn btn-success">Login <span
                 class="text-Casino">|</span> Sign In</button></a>
         </div>

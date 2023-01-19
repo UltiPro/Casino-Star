@@ -2,11 +2,11 @@
 
 using System.Data;
 using System.Data.SqlClient;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
-using Models.CoinFlip;
 using Models.TokenVerification;
 using Models.UserModel;
+using Models.RequestAdmin;
+using Models.RequestAdminMoney;
 
 namespace Kasyno.Controllers;
 
@@ -28,7 +28,8 @@ public class AdminController : ControllerBase
         if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
         JsonResult answer = userController.GetUser(new TokenVerification(tokenVerification.id, tokenVerification.token));
         User? user = answer.Value as User;
-        if (user?.id == 0 || user?.admin == false) return Ok(new { statusCode = false, message = "You are not permited to do this action" });
+        if (user?.id == 0) return Ok(new { statusCode = false, message = "You are not permited to do this action, please re-login!" });
+        if (user?.admin == false) return Ok(new { statusCode = false, message = "You are not permited to do this action, you are not admin!" });
         else
         {
             var listOfUsers = new List<UserFull>();
@@ -53,6 +54,123 @@ public class AdminController : ControllerBase
             {
                 Console.WriteLine(e.Message); // logger
                 return Ok(new { statusCode = false, message = "You are not permited to do this action" });
+            }
+        }
+    }
+    [HttpPost("banuser")]
+    public bool BanUser([FromBody] RequestAdmin requestAdmin)
+    {
+        if (!ModelState.IsValid) return false;
+        JsonResult answer = userController.GetUser(new TokenVerification(requestAdmin.idAdmin, requestAdmin.token));
+        User? user = answer.Value as User;
+        if (user?.id == 0 || user?.admin == false) return false;
+        else
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UpdateBanned", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", requestAdmin.idTarget);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return false;
+            }
+        }
+    }
+    [HttpPost("activeuser")]
+    public bool ActiveUser([FromBody] RequestAdmin requestAdmin)
+    {
+        if (!ModelState.IsValid) return false;
+        JsonResult answer = userController.GetUser(new TokenVerification(requestAdmin.idAdmin, requestAdmin.token));
+        User? user = answer.Value as User;
+        if (user?.id == 0 || user?.admin == false) return false;
+        else
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UpdateActive", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", requestAdmin.idTarget);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return false;
+            }
+        }
+    }
+    [HttpPost("adminuser")]
+    public bool AdminUser([FromBody] RequestAdmin requestAdmin)
+    {
+        if (!ModelState.IsValid) return false;
+        JsonResult answer = userController.GetUser(new TokenVerification(requestAdmin.idAdmin, requestAdmin.token));
+        User? user = answer.Value as User;
+        if (user?.id == 0 || user?.admin == false) return false;
+        else
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UpdateAdmin", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", requestAdmin.idTarget);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return false;
+            }
+        }
+    }
+    [HttpPost("updatemoney")]
+    public bool UpdateMoney([FromBody] RequestAdminMoney requestAdminMoney)
+    {
+        if (!ModelState.IsValid) return false;
+        JsonResult answer = userController.GetUser(new TokenVerification(requestAdminMoney.idAdmin, requestAdminMoney.token));
+        User? user = answer.Value as User;
+        if (user?.id == 0 || user?.admin == false) return false;
+        else
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("UpdateMoneyNewSet", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", requestAdminMoney.idTarget);
+                    cmd.Parameters.AddWithValue("@value", requestAdminMoney.money);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return false;
             }
         }
     }

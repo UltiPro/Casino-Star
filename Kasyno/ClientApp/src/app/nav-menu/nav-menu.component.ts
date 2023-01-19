@@ -12,7 +12,7 @@ export class NavMenuComponent {
 
   public appName: string = "Casino Star";
 
-  constructor(public router: Router, public userService: UserService) { 
+  constructor(public router: Router, protected userService: UserService) { 
     userService.RefreshUser();
   }
 

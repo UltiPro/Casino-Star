@@ -13,17 +13,13 @@ import { PostAnswer } from 'src/app/models/answer.module';
 })
 export class UserService {
   user: User | null = null;
-  #loggedIn: boolean = false;
-  #adminUser: boolean = false;
   token: string | null = null;
+  id: number | null = null;
+  loggedIn: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {
     this.RefreshUser();
   }
-
-  getLoggedIn = () => this.#loggedIn;
-
-  getAdminUser = () => this.#adminUser;
 
   CreateUser(userRegistration: UserRegistration): Observable<PostUserRegistration> {
     return this.http.post<PostUserRegistration>(getBaseUrlUser() + "/register", userRegistration);
@@ -35,16 +31,17 @@ export class UserService {
 
   LoginUserComplete(token: string, user: User) {
     this.user = user;
-    this.#loggedIn = true;
     this.token = token;
-    this.#adminUser = user.GetAdmin();
+    this.loggedIn = true;
     window.localStorage.setItem("token", JSON.stringify(this.token));
     window.localStorage.setItem("id", JSON.stringify(this.user.GetId()));
   }
 
   Logout() {
     window.localStorage.clear();
-    this.#loggedIn = false;
+    this.user = null;
+    this.token = null;
+    this.loggedIn = false;
     this.router.navigate(['/']);
   }
 
@@ -54,13 +51,13 @@ export class UserService {
 
   RefreshUser() {
     this.token = window.localStorage.getItem("token");
-    const id = window.localStorage.getItem("id");
-    if (id != null && this.token != null && this.token?.length > 350) {
-      this.GetUserData(parseInt(id), this.token).subscribe(answer => {
+    const tempId = window.localStorage.getItem("id");
+    if(tempId != null) this.id = parseInt(tempId);
+    if (this.id != null && this.token != null && this.token?.length > 200) {
+      this.GetUserData(this.id, this.token).subscribe(answer => {
         this.user = new User(answer.id, answer.login, answer.email, answer.money, answer.admin);
       });
-      this.#loggedIn = true;
-      this.#adminUser = this.user?.GetAdmin() ? true : false;
+      this.loggedIn = true;
     }
   }
 

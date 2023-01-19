@@ -4,7 +4,7 @@
         [styleToInsert2]="statusCode ? 'border-success' : 'border-danger'"
         (statusCode)="reciveStatusCode($event)"></app-info-alert>
 </div>
-<div class="container" *ngIf="isLoged; else notLogged">
+<div class="container" *ngIf="userService.loggedIn; else notLogged">
     <div class="plate m-auto mt-5">
         <ul class="inner">
             <li class="number"><label><input type="radio" name="pit" value="32" /><span class="pit">32</span></label>

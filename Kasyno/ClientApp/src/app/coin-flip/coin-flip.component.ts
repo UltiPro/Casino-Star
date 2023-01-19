@@ -27,7 +27,6 @@ import { GamesService } from '../services/games.service';
 export class CoinFlipComponent {
   public state = '1';
 
-  public isLoged: boolean;
   public infoBox = false;
   public blockOfGame = false;
 
@@ -48,9 +47,8 @@ export class CoinFlipComponent {
     InputMoney: new FormControl(null, [Validators.min(1), Validators.max(this.userService.user?.GetMoney() as number), Validators.required])
   });
 
-  constructor(private userService: UserService, private gameService: GamesService) {
+  constructor(protected userService: UserService, private gameService: GamesService) {
     userService.RefreshUser();
-    this.isLoged = userService.getLoggedIn();
     this.audioWin.src = "../../assets/win.mp3";
     this.audioLose.src = "../../assets/lose.mp3";
     this.audioWin.load();
