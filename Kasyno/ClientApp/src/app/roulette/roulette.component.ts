@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GamesService } from '../services/games.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { PostAnswerWithAngle } from '../models/answer.module';
+import { RouletteHistoryItem } from '../models/games/rouletteHistory.module';
 
 @Component({
   selector: 'app-roulette',
@@ -23,6 +24,9 @@ import { PostAnswerWithAngle } from '../models/answer.module';
 })
 export class RouletteComponent {
   public state: string = '1';
+
+  public gameOrHistory: boolean = true;
+  public gameHistory: Array<RouletteHistoryItem>;
 
   public blockOfGame = false;
 
@@ -56,6 +60,7 @@ export class RouletteComponent {
 
   constructor(protected userService: UserService, private gameService: GamesService) {
     userService.RefreshUser();
+    this.RefreshGameHistory();
     this.audioWin.src = "../../assets/win.mp3";
     this.audioLose.src = "../../assets/lose.mp3";
     this.audioWin.load();
@@ -130,5 +135,29 @@ export class RouletteComponent {
   playAudio(win: boolean) {
     if (win) this.audioWin.play();
     else this.audioLose.play()
+  }
+
+  ChangeView(set: boolean, element: any): void {
+    this.gameOrHistory = set;
+    if (set) {
+      element.target.classList.remove("btn-secondary");
+      element.target.classList.add("btn-dark");
+      element.target.nextElementSibling.classList.remove("btn-dark");
+      element.target.nextElementSibling.classList.add("btn-secondary");
+    }
+    else {
+      element.target.classList.remove("btn-secondary");
+      element.target.classList.add("btn-dark");
+      element.target.previousElementSibling.classList.remove("btn-dark");
+      element.target.previousElementSibling.classList.add("btn-secondary");
+    }
+  }
+
+  RefreshGameHistory() {
+    this.gameService.GetRouletteHistory(this.userService.id as number, 100).subscribe(status => {
+      if(status != null){
+        this.gameHistory = status;
+      }
+    });
   }
 }

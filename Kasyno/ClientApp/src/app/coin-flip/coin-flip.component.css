@@ -91,3 +91,8 @@
 .coin-select {
     box-shadow: 0 0 10px 7px whitesmoke;
 }
+
+.btn-change{
+    width: 125px;
+    transition: all .2s linear !important;
+}

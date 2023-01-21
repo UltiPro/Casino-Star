@@ -30,6 +30,7 @@ import { GamesService } from './services/games.service';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminService } from './services/admin.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AccordionModule.forRoot(),
     BrowserAnimationsModule
   ],
-  providers: [UserService, GamesService],
+  providers: [UserService, GamesService, AdminService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

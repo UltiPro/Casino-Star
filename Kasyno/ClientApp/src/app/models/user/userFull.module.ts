@@ -9,12 +9,13 @@ export class UserFull extends User {
     GetBanned = (): boolean => this.banned;
     SetBanned = (banned: boolean): any => this.banned = banned;
 }
+
 export interface PostUserFull {
     id: number,
     login: string,
     email: string,
     money: number,
-    admin: boolean
-    active: boolean;
-    banned: boolean;
+    admin: boolean,
+    active: boolean,
+    banned: boolean
 }

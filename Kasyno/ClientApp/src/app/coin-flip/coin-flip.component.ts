@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GamesService } from '../services/games.service';
+import { CoinflipHistoryItem } from '../models/games/coinflipHistory.module';
 
 @Component({
   selector: 'app-coin-flip',
@@ -27,6 +28,9 @@ import { GamesService } from '../services/games.service';
 export class CoinFlipComponent {
   public state = '1';
 
+  public gameOrHistory: boolean = true;
+  public gameHistory: Array<CoinflipHistoryItem>;
+
   public infoBox = false;
   public blockOfGame = false;
 
@@ -49,13 +53,14 @@ export class CoinFlipComponent {
 
   constructor(protected userService: UserService, private gameService: GamesService) {
     userService.RefreshUser();
+    this.RefreshGameHistory();
     this.audioWin.src = "../../assets/win.mp3";
     this.audioLose.src = "../../assets/lose.mp3";
     this.audioWin.load();
     this.audioLose.load();
   }
 
-  LounchGame(counter: number) {
+  LounchGame(counter: number): void {
     this.state = '1';
     if (this.blockOfGame) return;
     else {
@@ -76,6 +81,7 @@ export class CoinFlipComponent {
           this.statusCode = status.statusCode;
           this.message = status.message;
           this.userService.RefreshUser();
+          this.RefreshGameHistory();
         }, 3500)
         setTimeout(() => {
           this.blockOfGame = false;
@@ -84,7 +90,7 @@ export class CoinFlipComponent {
     }
   }
 
-  ChangeDecision(value: boolean) {
+  ChangeDecision(value: boolean): void {
     if (this.blockOfGame) return;
     if (value) {
       this.silver_coin.nativeElement.classList.remove("coin-select");
@@ -102,8 +108,32 @@ export class CoinFlipComponent {
     this.statusCode = $event as boolean | null;
   }
 
-  playAudio(win: boolean) {
+  playAudio(win: boolean): void {
     if (win) this.audioWin.play();
     else this.audioLose.play()
+  }
+
+  ChangeView(set: boolean, element: any): void {
+    this.gameOrHistory = set;
+    if (set) {
+      element.target.classList.remove("btn-secondary");
+      element.target.classList.add("btn-dark");
+      element.target.nextElementSibling.classList.remove("btn-dark");
+      element.target.nextElementSibling.classList.add("btn-secondary");
+    }
+    else {
+      element.target.classList.remove("btn-secondary");
+      element.target.classList.add("btn-dark");
+      element.target.previousElementSibling.classList.remove("btn-dark");
+      element.target.previousElementSibling.classList.add("btn-secondary");
+    }
+  }
+
+  RefreshGameHistory() {
+    this.gameService.GetCoinFlipHistory(this.userService.id as number, 100).subscribe(status => {
+      if(status != null){
+        this.gameHistory = status;
+      }
+    });
   }
 }

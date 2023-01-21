@@ -298,3 +298,8 @@
     background-color: whitesmoke;
     border-radius: 50%;
 }
+
+.btn-change{
+    width: 125px;
+    transition: all .2s linear !important;
+}

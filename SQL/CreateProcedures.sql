@@ -50,11 +50,13 @@ GO
 CREATE PROCEDURE VerifyUser
     (
     @id INT,
-    @token varchar(512)
+    @token VARCHAR(512)
 )
 AS
 BEGIN
-    SELECT * FROM Users WHERE Id = @id AND token = @token
+    SELECT *
+    FROM Users
+    WHERE Id = @id AND token = @token
 END
 GO
 CREATE PROCEDURE SetToken
@@ -159,4 +161,54 @@ AS
 BEGIN
     SELECT *
     FROM Users
+END
+GO
+CREATE PROCEDURE InsertRouletteHistory
+    (
+    @id INT,
+    @money INT,
+    @decision VARCHAR(32),
+    @decisionWin VARCHAR(32)
+)
+AS
+BEGIN
+    INSERT INTO Roulette
+        (WinnerId,WinMoney,Decision,WinDecision)
+    Values
+        (@id, @money, @decision, @decisionWin)
+END
+GO
+CREATE PROCEDURE InsertCoinFlipHistory
+    (
+    @id INT,
+    @money INT,
+    @decision VARCHAR(32),
+    @decisionCounter INT
+)
+AS
+BEGIN
+    INSERT INTO CoinFlip
+        (WinnerId,WinMoney,Decision,DecisionCounter)
+    Values
+        (@id, @money, @decision, @decisionCounter)
+END
+GO
+CREATE PROCEDURE GetCoinFlipHistory
+(
+    @id INT,
+    @count INT
+)
+AS
+BEGIN
+    SELECT TOP (@count) * FROM CoinFlip WHERE WinnerId = @id
+END
+GO
+CREATE PROCEDURE GetRouletteHistory
+(
+    @id INT,
+    @count INT
+)
+AS
+BEGIN
+    SELECT TOP (@count) * FROM Roulette WHERE WinnerId = @id
 END

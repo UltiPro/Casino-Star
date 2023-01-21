@@ -31,3 +31,11 @@ GO
 DROP PROCEDURE UpdateMoney
 GO
 DROP PROCEDURE UpdateMoneyNewSet
+GO
+DROP PROCEDURE InsertCoinFlipHistory
+GO
+DROP PROCEDURE InsertRouletteHistory
+GO 
+DROP PROCEDURE GetRouletteHistory
+GO
+DROP PROCEDURE GetCoinFlipHistory
