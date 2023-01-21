@@ -11,6 +11,8 @@ import { UserService } from '../../services/user.service';
 })
 export class SignInComponent {
 
+  checkbox: boolean | null;
+
   @Output()
   statusCode = new EventEmitter<boolean>();
 
@@ -22,6 +24,7 @@ export class SignInComponent {
     InputEmail: new FormControl(null, [Validators.pattern(RegexEmail()), Validators.required]),
     InputPassword: new FormControl(null, [Validators.pattern(RegexPassword()), Validators.required]),
     InputPassword2: new FormControl(null, [Validators.pattern(RegexPassword()), Validators.required]),
+    InputCheckBox: new FormControl(null, [Validators.requiredTrue]),
   }, {
     validators: CheckPasswords("InputPassword", "InputPassword2")
   });

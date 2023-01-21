@@ -62,7 +62,7 @@ export class CoinFlipComponent {
 
   LounchGame(counter: number): void {
     this.state = '1';
-    if (this.blockOfGame) return;
+    if(this.blockOfGame || !this.userService.loggedIn) return;
     else {
       this.blockOfGame = true;
       this.gameService.CoinFlip(this.userService.user?.GetId() as number, this.userService.token as string, this.decisionCoin, this.moneyBetted as number, counter).subscribe(status => {
@@ -87,13 +87,13 @@ export class CoinFlipComponent {
           this.blockOfGame = false;
         }, 7000);
       }, error => {
-        this.messageTitle = "Something went wrong";
-        this.statusCode = false;
-        if(error.status == 400) this.message = "Your input data was invalid";
-        else this.message = "An error occurred while processing the data";
-        setTimeout(()=>{
-          this.blockOfGame = false;
-        },3000);
+          this.messageTitle = "Something went wrong";
+          this.statusCode = false;
+          if (error.status == 400) this.message = "Your input data was invalid";
+          else this.message = "An error occurred while processing the data";
+          setTimeout(() => {
+            this.blockOfGame = false;
+          }, 3000);
       });
     }
   }
@@ -138,8 +138,9 @@ export class CoinFlipComponent {
   }
 
   RefreshGameHistory() {
+    if(!this.userService.loggedIn) return;
     this.gameService.GetCoinFlipHistory(this.userService.id as number, 100).subscribe(status => {
-      if(status != null){
+      if (status != null) {
         this.gameHistory = status;
       }
     }, error => {

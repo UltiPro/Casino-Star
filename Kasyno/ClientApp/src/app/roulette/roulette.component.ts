@@ -72,7 +72,7 @@ export class RouletteComponent {
   }
 
   onSubmitFirst() {
-    if (this.blockOfGame) return;
+    if (this.blockOfGame || !this.userService.loggedIn) return;
     else {
       this.state = '1';
       this.blockOfGame = true;
@@ -92,7 +92,7 @@ export class RouletteComponent {
   }
 
   onSubmitSecond() {
-    if (this.blockOfGame) return;
+    if (this.blockOfGame || !this.userService.loggedIn) return;
     else {
       this.state = '1';
       this.blockOfGame = true;
@@ -172,6 +172,7 @@ export class RouletteComponent {
   }
 
   RefreshGameHistory() {
+    if (!this.userService.loggedIn) return;
     this.gameService.GetRouletteHistory(this.userService.id as number, 100).subscribe(status => {
       if(status != null){
         this.gameHistory = status;
