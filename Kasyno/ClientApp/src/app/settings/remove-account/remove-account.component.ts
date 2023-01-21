@@ -33,6 +33,10 @@ export class RemoveAccountComponent {
       else {
         this.userService.Logout();
       }
+    }, error => {
+      console.log(error);
+      this.statusCode.emit(false);
+      this.message.emit("An error occurred while processing the data");
     });
   }
 }

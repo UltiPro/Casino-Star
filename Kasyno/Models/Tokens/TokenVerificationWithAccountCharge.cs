@@ -4,10 +4,10 @@ namespace Models.TokenVerification;
 
 public class TokenVerificationWithAccountCharge
 {
-    [Required(ErrorMessage = "Id is required.")]
+    [Required]
     [Display(Name = "id")]
     public int id { get; set; }
-    [Required(ErrorMessage = "Token is required.")]
+    [Required]
     [Display(Name = "token")]
     public string? token { get; set; }
     [Required(ErrorMessage = "Charge ammount is required.")]

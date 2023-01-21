@@ -48,7 +48,7 @@ export class CoinFlipComponent {
   @ViewChild('silver_coin') silver_coin: ElementRef<HTMLDivElement>;
 
   AmmountForm: FormGroup = new FormGroup({
-    InputMoney: new FormControl(null, [Validators.min(1), Validators.max(this.userService.user?.GetMoney() as number), Validators.required])
+    InputMoney: new FormControl(null, [Validators.min(1), Validators.max(1000005), Validators.required])
   });
 
   constructor(protected userService: UserService, private gameService: GamesService) {
@@ -86,6 +86,14 @@ export class CoinFlipComponent {
         setTimeout(() => {
           this.blockOfGame = false;
         }, 7000);
+      }, error => {
+        this.messageTitle = "Something went wrong";
+        this.statusCode = false;
+        if(error.status == 400) this.message = "Your input data was invalid";
+        else this.message = "An error occurred while processing the data";
+        setTimeout(()=>{
+          this.blockOfGame = false;
+        },3000);
       });
     }
   }
@@ -134,6 +142,11 @@ export class CoinFlipComponent {
       if(status != null){
         this.gameHistory = status;
       }
+    }, error => {
+      console.log(error);
+      this.messageTitle = "Something went wrong";
+      this.statusCode = false;
+      this.message = "An error occurred while processing the data";
     });
   }
 }

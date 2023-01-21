@@ -200,7 +200,7 @@ CREATE PROCEDURE GetCoinFlipHistory
 )
 AS
 BEGIN
-    SELECT TOP (@count) * FROM CoinFlip WHERE WinnerId = @id
+    SELECT TOP (@count) * FROM CoinFlip WHERE WinnerId = @id ORDER BY Id DESC
 END
 GO
 CREATE PROCEDURE GetRouletteHistory
@@ -210,5 +210,5 @@ CREATE PROCEDURE GetRouletteHistory
 )
 AS
 BEGIN
-    SELECT TOP (@count) * FROM Roulette WHERE WinnerId = @id
+    SELECT TOP (@count) * FROM Roulette WHERE WinnerId = @id ORDER BY Id DESC
 END

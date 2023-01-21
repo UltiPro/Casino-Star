@@ -9,7 +9,7 @@ public class TokenVerification
     public int id { get; set; }
     [Required]
     [Display(Name = "token")]
-    public string token { get; set; }
+    public string? token { get; set; }
     public TokenVerification(int id, string token)
     {
         this.id = id;

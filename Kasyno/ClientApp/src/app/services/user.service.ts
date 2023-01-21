@@ -56,6 +56,8 @@ export class UserService {
     if (this.id != null && this.token != null && this.token?.length > 200) {
       this.GetUserData(this.id, this.token).subscribe(answer => {
         this.user = new User(answer.id, answer.login, answer.email, answer.money, answer.admin);
+      }, error => {
+        console.log(error);
       });
       this.loggedIn = true;
     }

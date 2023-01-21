@@ -4,8 +4,10 @@ namespace Models.TokenVerification;
 
 public class TokenVerificationWithPassword
 {
+    [Required]
     [Display(Name = "id")]
     public int id { get; set; }
+    [Required]
     [Display(Name = "token")]
     public string? token { get; set; }
     [Required(ErrorMessage = "Password is required.")]

@@ -50,11 +50,11 @@ export class RouletteComponent {
   @ViewChild('buttonFirst') buttonFirst: ElementRef<HTMLButtonElement>;
 
   FirstForm: FormGroup = new FormGroup({
-    InputMoney: new FormControl(null, [Validators.min(1), Validators.max(this.userService.user?.GetMoney() as number), Validators.required])
+    InputMoney: new FormControl(null, [Validators.min(1), Validators.max(1000000), Validators.required])
   });
 
   SecondForm: FormGroup = new FormGroup({
-    InputMoney: new FormControl(null, [Validators.min(1), Validators.max(this.userService.user?.GetMoney() as number), Validators.required]),
+    InputMoney: new FormControl(null, [Validators.min(1), Validators.max(1000000), Validators.required]),
     InputNumber: new FormControl(null, [Validators.min(0), Validators.max(36), Validators.required])
   });
 
@@ -78,8 +78,17 @@ export class RouletteComponent {
       this.blockOfGame = true;
       this.gameService.RouletteColor(this.userService.user?.GetId() as number, this.userService.token as string, this.choosenColor, this.moneyBettedFirst as number).subscribe(status => {
         this.ContinueGame(status);
+      }, error => {
+        this.messageTitle = "Something went wrong";
+        this.statusCode = false;
+        if(error.status == 400) this.message = "Your input data was invalid";
+        else this.message = "An error occurred while processing the data";
+        setTimeout(()=>{
+          this.blockOfGame = false;
+        },3000);
       });
     }
+    this.FirstForm.reset();
   }
 
   onSubmitSecond() {
@@ -89,6 +98,14 @@ export class RouletteComponent {
       this.blockOfGame = true;
       this.gameService.RouletteNumber(this.userService.user?.GetId() as number, this.userService.token as string, this.numberBetted, this.moneyBettedSecond as number).subscribe(status => {
         this.ContinueGame(status);
+      }, error => {
+        this.messageTitle = "Something went wrong";
+        this.statusCode = false;
+        if(error.status == 400) this.message = "Your input data was invalid";
+        else this.message = "An error occurred while processing the data";
+        setTimeout(()=>{
+          this.blockOfGame = false;
+        },3000);
       });
     }
   }
@@ -107,6 +124,7 @@ export class RouletteComponent {
       this.statusCode = status.statusCode;
       this.message = status.message;
       this.userService.RefreshUser();
+      this.RefreshGameHistory();
     }, 7500)
     setTimeout(() => {
       this.blockOfGame = false;
@@ -158,6 +176,11 @@ export class RouletteComponent {
       if(status != null){
         this.gameHistory = status;
       }
+    }, error => {
+      console.log(error);
+      this.messageTitle = "Something went wrong";
+      this.statusCode = false;
+      this.message = "An error occurred while processing the data";
     });
   }
 }

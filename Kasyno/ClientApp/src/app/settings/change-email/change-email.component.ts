@@ -29,6 +29,10 @@ export class ChangeEmailComponent {
     this.userService.UpdateEmail(this.email, this.newEmail).subscribe(status => {
       this.statusCode.emit(status.statusCode);
       this.message.emit(status.message);
+    }, error => {
+      console.log(error);
+      this.statusCode.emit(false);
+      this.message.emit("An error occurred while processing the data");
     });
   }
 }

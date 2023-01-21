@@ -31,6 +31,8 @@ export class AdminService {
         console.log(response.message);
         this.router.navigate(['']);
       }
+    }, error => {
+      console.log(error);
     });
   }
 

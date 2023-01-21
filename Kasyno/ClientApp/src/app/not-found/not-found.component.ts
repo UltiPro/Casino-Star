@@ -10,7 +10,4 @@ export class NotFoundComponent {
 
   constructor(public router: Router) { }
 
-  ngOnInit(): void {
-  }
-
 }

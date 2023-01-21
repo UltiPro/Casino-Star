@@ -4,8 +4,10 @@ namespace Models.TokenVerification;
 
 public class TokenVerificationWithEmailChange
 {
+    [Required]
     [Display(Name = "id")]
     public int id { get; set; }
+    [Required]
     [Display(Name = "token")]
     public string? token { get; set; }
     [Required(ErrorMessage = "Old e-mail is required.")]

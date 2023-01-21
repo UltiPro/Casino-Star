@@ -22,6 +22,8 @@ export class AdminPanelComponent implements OnInit {
       if (response) {
         this.adminService.RefreshGetAllUsers();
       }
+    }, error => {
+      console.log(error);
     });
   }
 
@@ -30,6 +32,8 @@ export class AdminPanelComponent implements OnInit {
       if (response) {
         this.adminService.RefreshGetAllUsers();
       }
+    }, error => {
+      console.log(error);
     });
   }
 
@@ -38,6 +42,8 @@ export class AdminPanelComponent implements OnInit {
       if (response) {
         this.adminService.RefreshGetAllUsers();
       }
+    }, error => {
+      console.log(error);
     });
   }
 
@@ -46,6 +52,8 @@ export class AdminPanelComponent implements OnInit {
       if (response) {
         this.adminService.RefreshGetAllUsers();
       }
+    }, error => {
+      console.log(error);
     });
   }
 }

@@ -6,11 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './only-for-loged.component.html',
   styleUrls: ['./only-for-loged.component.css']
 })
-export class OnlyForLogedComponent implements OnInit {
+export class OnlyForLogedComponent {
 
   constructor(public router: Router) { }
-
-  ngOnInit(): void {
-  }
-
 }

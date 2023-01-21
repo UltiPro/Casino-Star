@@ -47,6 +47,10 @@ export class LoginComponent {
           status.message.user.admin));
         this.router.navigateByUrl('');
       }
+    }, error => {
+      console.log(error);
+      this.statusCode.emit(false);
+      this.message.emit("An error occurred while processing the data");
     });
   }
 }
