@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegexLogin, RegexEmail, RegexPassword, CheckPasswords } from '../../validation';
 import { UserRegistration } from '../../models/user/userRegistration.module';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -23,15 +24,14 @@ export class SignInComponent {
     InputLogin: new FormControl(null, [Validators.pattern(RegexLogin()), Validators.required]),
     InputEmail: new FormControl(null, [Validators.pattern(RegexEmail()), Validators.required]),
     InputPassword: new FormControl(null, [Validators.pattern(RegexPassword()), Validators.required]),
-    InputPassword2: new FormControl(null, [Validators.pattern(RegexPassword()), Validators.required]),
-    InputCheckBox: new FormControl(null, [Validators.requiredTrue]),
+    InputPassword2: new FormControl(null, [Validators.pattern(RegexPassword()), Validators.required])
   }, {
     validators: CheckPasswords("InputPassword", "InputPassword2")
   });
 
   user: UserRegistration;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     this.user = new UserRegistration("", "", "", "");
   }
 
@@ -40,9 +40,8 @@ export class SignInComponent {
       this.statusCode.emit(status.statusCode);
       this.message.emit(status.message);
     }, error => {
-      console.log(error);
-      this.statusCode.emit(false);
-      this.message.emit("An error occurred while processing the data");
+      this.statusCode.emit(error.error.statusCode);
+      this.message.emit(error.error.message);
     });
   }
 }

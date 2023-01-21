@@ -4,38 +4,15 @@
 }
 
 .info-box {
-    position: absolute;
+    position: relative;
     left: 50vw;
     top: 40vh;
     transform: translate(-50%, -100%);
     z-index: 999;
 }
 
-.container-translate {
-    position: absolute;
-    transform: translate(-50%, -50%);
-}
-
-.container-coin {
-    top: 35vh;
-    left: 50vw;
-}
-
-.container-game {
-    top: 55vh;
-    left: 50vw;
-}
-
-.container-menu {
-    top: 45vh;
-    left: 25vw;
-    height: 40vh;
-}
-
-.container-score {
-    top: 45vh;
-    left: 75vw;
-    height: 40vh;
+.container-box {
+    height: 350px;
 }
 
 .coin {
@@ -95,4 +72,8 @@
 .btn-change{
     width: 125px;
     transition: all .2s linear !important;
+}
+
+.pointer-cursor{
+    cursor: pointer;
 }

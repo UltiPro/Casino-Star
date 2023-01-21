@@ -27,6 +27,7 @@ export class RouletteComponent {
 
   public gameOrHistory: boolean = true;
   public gameHistory: Array<RouletteHistoryItem>;
+  private copy_gameHistory: Array<RouletteHistoryItem>;
 
   public blockOfGame = false;
 
@@ -44,6 +45,9 @@ export class RouletteComponent {
 
   private audioWin = new Audio();
   private audioLose = new Audio();
+
+  private sortByDate: boolean = false;
+  private sortByPrize: number = 0;
 
   private numbersAngles = [0, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
 
@@ -80,9 +84,9 @@ export class RouletteComponent {
         this.ContinueGame(status);
       }, error => {
         this.messageTitle = "Something went wrong";
-        this.statusCode = false;
+        this.statusCode = error.error.statusCode;
         if(error.status == 400) this.message = "Your input data was invalid";
-        else this.message = "An error occurred while processing the data";
+        else this.message = error.error.message;
         setTimeout(()=>{
           this.blockOfGame = false;
         },3000);
@@ -100,9 +104,9 @@ export class RouletteComponent {
         this.ContinueGame(status);
       }, error => {
         this.messageTitle = "Something went wrong";
-        this.statusCode = false;
+        this.statusCode = error.error.statusCode;
         if(error.status == 400) this.message = "Your input data was invalid";
-        else this.message = "An error occurred while processing the data";
+        else this.message = error.error.message;
         setTimeout(()=>{
           this.blockOfGame = false;
         },3000);
@@ -176,12 +180,53 @@ export class RouletteComponent {
     this.gameService.GetRouletteHistory(this.userService.id as number, 100).subscribe(status => {
       if(status != null){
         this.gameHistory = status;
+        this.copy_gameHistory = status;
       }
     }, error => {
-      console.log(error);
-      this.messageTitle = "Something went wrong";
-      this.statusCode = false;
-      this.message = "An error occurred while processing the data";
+      this.messageTitle = "Something went wrong with game history";
+      this.statusCode = error.error.statusCode;
+      this.message = error.error.message;
     });
+  }
+
+  SortByDate(element: any): void {
+    this.Reset(element);
+    this.sortByPrize = 0;
+    this.gameHistory.reverse();
+    this.sortByDate = !this.sortByDate;
+    if (this.sortByDate) {
+      element.target.classList.add("bg-primary");
+    }
+    else {
+      element.target.classList.remove("bg-primary");
+    }
+  }
+
+  ShowByPrize(element: any) {
+    this.Reset(element);
+    this.sortByDate = false;
+    this.gameHistory = this.copy_gameHistory;
+    if (this.sortByPrize == 0) {
+      this.gameHistory = this.gameHistory.filter(e => e.winMoney > 0);
+      element.target.classList.add("bg-success");
+      this.sortByPrize++;
+    }
+    else if (this.sortByPrize == 1) {
+      this.gameHistory = this.gameHistory.filter(e => e.winMoney < 0);
+      element.target.classList.add("bg-danger");
+      this.sortByPrize++;
+    }
+    else {
+      this.sortByPrize = 0;
+    }
+  }
+
+  Reset(element: any){
+    element.target.parentNode.childNodes[1].classList.remove("bg-primary");
+    element.target.parentNode.childNodes[2].classList.remove("bg-success");
+    element.target.parentNode.childNodes[2].classList.remove("bg-danger");
+    element.target.parentNode.childNodes[3].classList.remove("bg-warning");
+    element.target.parentNode.childNodes[3].classList.remove("bg-secondary");
+    element.target.parentNode.childNodes[4].classList.remove("bg-secondary");
   }
 }

@@ -31,6 +31,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminService } from './services/admin.service';
+import { TermsAndPolicyComponent } from './terms-and-policy/terms-and-policy.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AdminService } from './services/admin.service';
     ChangePasswordComponent,
     ChangeEmailComponent,
     InfoAlertComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    TermsAndPolicyComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -65,6 +67,7 @@ import { AdminService } from './services/admin.service';
       { path: 'Settings', component: SettingsComponent },
       { path: 'Login', component: LoginSignInComponent },
       { path: 'Admin-Panel', component: AdminPanelComponent },
+      { path: 'Terms-of-Use-and-Private-Policy', component: TermsAndPolicyComponent},
       { path: '**', redirectTo: '/not-found' },
       { path: 'not-found', component: NotFoundComponent }
     ]),

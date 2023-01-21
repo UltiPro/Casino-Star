@@ -5,7 +5,7 @@
         (statusCode)="reciveStatusCode($event)"></app-info-alert>
 </div>
 <div class="container" *ngIf="this.userService.loggedIn; else notLogged">
-    <div class="container col-8 mt-5 p-0 bg-dark bg-opacity-50 border border-warning shadow-lg rounded-3">
+    <div class="container col-12 col-md-8 mt-5 p-0 bg-dark bg-opacity-50 border border-warning shadow-lg rounded-3">
         <mat-accordion>
             <mat-expansion-panel hideToggle disabled class="p-4 border-bottom border-warning pe-none">
                 <mat-expansion-panel-header>

@@ -27,87 +27,125 @@ public class GamesController : ControllerBase
     [HttpPost("coinflip")]
     public IActionResult CoinFlip([FromBody] CoinFlipRequest coinFlipRequest)
     {
-        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
-        if (coinFlipRequest.gameCounter != 10 && coinFlipRequest.gameCounter != 4 && coinFlipRequest.gameCounter != 2) return Ok(new { statusCode = false, message = "Something went wrong, please try later" });
-        JsonResult answer = userController.GetUser(new TokenVerification(coinFlipRequest.id, coinFlipRequest.token));
-        User? user = answer.Value as User;
-        if (user?.money < coinFlipRequest.betMoney) return Ok(new { statusCode = false, message = "You don't have enough funds to make this operation" });
-        else
+        try
         {
-            Random rnd = new Random();
-            bool score = (rnd.NextDouble() <= (1.0 / coinFlipRequest.gameCounter));
-            int winPrize;
-            if (score) winPrize = coinFlipRequest.betMoney * coinFlipRequest.gameCounter;
-            else winPrize = coinFlipRequest.betMoney * (-1);
-            bool allowed = userController.ChargeAccountContinue(coinFlipRequest.id, winPrize);
-            if (allowed)
+            if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
+            if (coinFlipRequest.gameCounter != 10 && coinFlipRequest.gameCounter != 4 && coinFlipRequest.gameCounter != 2) return BadRequest(new { statusCode = false, message = "Something went wrong, please try later." });
+            JsonResult answer = userController.GetUser(new TokenVerification(coinFlipRequest.id, coinFlipRequest.token));
+            User? user = answer.Value as User;
+            if (user?.money < coinFlipRequest.betMoney) return Unauthorized(new { statusCode = false, message = "You don't have enough funds to make this operation." });
+            else
             {
-                bool worked = false;
-                do
+                Random rnd = new Random();
+                bool score = (rnd.NextDouble() <= (1.0 / coinFlipRequest.gameCounter));
+                int winPrize;
+                if (score) winPrize = coinFlipRequest.betMoney * coinFlipRequest.gameCounter;
+                else winPrize = coinFlipRequest.betMoney * (-1);
+                bool allowed = userController.ChargeAccountContinue(coinFlipRequest.id, winPrize);
+                if (allowed)
                 {
-                    worked = !InsertCoinFlipHistory(coinFlipRequest.id, winPrize, (coinFlipRequest.decision ? "gold" : "silver"), coinFlipRequest.gameCounter);
-                } while (worked);
-                if (winPrize > 0) return Ok(new { statusCode = true, message = "You won " + winPrize + " dollars" });
-                else return Ok(new { statusCode = false, message = "You lost " + winPrize * (-1) + " dollars" });
-
+                    bool worked = false;
+                    do
+                    {
+                        worked = !InsertCoinFlipHistory(coinFlipRequest.id, winPrize, (coinFlipRequest.decision ? "gold" : "silver"), coinFlipRequest.gameCounter);
+                    } while (worked);
+                    if (winPrize > 0) return Ok(new { statusCode = true, message = "You won " + winPrize + " dollars." });
+                    else return Ok(new { statusCode = false, message = "You lost " + winPrize * (-1) + " dollars." });
+                }
+                else return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later." });
             }
-            else return Ok(new { statusCode = false, message = "Something went wrong, please try later" });
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later." });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later." });
         }
     }
     [HttpPost("roulettenumber")]
     public IActionResult RouletteNumber([FromBody] RouletteNumberRequest rouletteNumberRequest)
     {
-        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState, number = -1 });
-        JsonResult answer = userController.GetUser(new TokenVerification(rouletteNumberRequest.id, rouletteNumberRequest.token));
-        User? user = answer.Value as User;
-        if (user?.money < rouletteNumberRequest.betMoney) return Ok(new { statusCode = false, message = "You don't have enough funds to make this operation", number = -1 });
-        else
+        try
         {
-            int score = GetRouletteNumber();
-            int winPrize;
-            if (score == rouletteNumberRequest.decision) winPrize = rouletteNumberRequest.betMoney * 10;
-            else winPrize = rouletteNumberRequest.betMoney * (-1);
-            bool allowed = userController.ChargeAccountContinue(rouletteNumberRequest.id, winPrize);
-            if (allowed)
+            if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState, number = -1 });
+            JsonResult answer = userController.GetUser(new TokenVerification(rouletteNumberRequest.id, rouletteNumberRequest.token));
+            User? user = answer.Value as User;
+            if (user?.money < rouletteNumberRequest.betMoney) return Unauthorized(new { statusCode = false, message = "You don't have enough funds to make this operation.", number = -1 });
+            else
             {
-                bool worked = false;
-                do
+                int score = GetRouletteNumber();
+                int winPrize;
+                if (score == rouletteNumberRequest.decision) winPrize = rouletteNumberRequest.betMoney * 10;
+                else winPrize = rouletteNumberRequest.betMoney * (-1);
+                bool allowed = userController.ChargeAccountContinue(rouletteNumberRequest.id, winPrize);
+                if (allowed)
                 {
-                    worked = !InsertRoulleteHistory(rouletteNumberRequest.id, winPrize, rouletteNumberRequest.decision.ToString(), score.ToString());
-                } while (worked);
-                if (winPrize > 0) return Ok(new { statusCode = true, message = "You won " + winPrize + " dollars", number = score });
-                else return Ok(new { statusCode = false, message = "You lost " + winPrize * (-1) + " dollars", number = score });
+                    bool worked = false;
+                    do
+                    {
+                        worked = !InsertRoulleteHistory(rouletteNumberRequest.id, winPrize, rouletteNumberRequest.decision.ToString(), score.ToString());
+                    } while (worked);
+                    if (winPrize > 0) return Ok(new { statusCode = true, message = "You won " + winPrize + " dollars.", number = score });
+                    else return Ok(new { statusCode = false, message = "You lost " + winPrize * (-1) + " dollars.", number = score });
+                }
+                else return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later.", number = -1 });
             }
-            else return Ok(new { statusCode = false, message = "Something went wrong, please try later", number = -1 });
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later.", number = -1 });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later.", number = -1 });
         }
     }
     [HttpPost("roulettecolor")]
     public IActionResult RouletteColor([FromBody] RouletteColorRequest rouletteColorRequest)
     {
-        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState, number = -1 });
-        JsonResult answer = userController.GetUser(new TokenVerification(rouletteColorRequest.id, rouletteColorRequest.token));
-        User? user = answer.Value as User;
-        if (user?.money < rouletteColorRequest.betMoney) return Ok(new { statusCode = false, message = "You don't have enough funds to make this operation", number = -1 });
-        else
+        try
         {
-            int score = GetRouletteNumber();
-            string color = GetColorByField(score);
-            int winPrize;
-            if (color.Equals(rouletteColorRequest.decision)) winPrize = rouletteColorRequest.betMoney * ColorPrize(rouletteColorRequest.decision);
-            else winPrize = rouletteColorRequest.betMoney * (-1);
-            bool allowed = userController.ChargeAccountContinue(rouletteColorRequest.id, winPrize);
-            if (allowed)
+            if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState, number = -1 });
+            JsonResult answer = userController.GetUser(new TokenVerification(rouletteColorRequest.id, rouletteColorRequest.token));
+            User? user = answer.Value as User;
+            if (user?.money < rouletteColorRequest.betMoney) return Unauthorized(new { statusCode = false, message = "You don't have enough funds to make this operation.", number = -1 });
+            else
             {
-                bool worked = false;
-                do
+                int score = GetRouletteNumber();
+                string color = GetColorByField(score);
+                int winPrize;
+                if (color.Equals(rouletteColorRequest.decision)) winPrize = rouletteColorRequest.betMoney * ColorPrize(rouletteColorRequest.decision);
+                else winPrize = rouletteColorRequest.betMoney * (-1);
+                bool allowed = userController.ChargeAccountContinue(rouletteColorRequest.id, winPrize);
+                if (allowed)
                 {
-                    worked = !InsertRoulleteHistory(rouletteColorRequest.id, winPrize, rouletteColorRequest.decision, color);
-                } while (worked);
-                if (winPrize > 0) return Ok(new { statusCode = true, message = "You won " + winPrize + " dollars", number = score });
-                else return Ok(new { statusCode = false, message = "You lost " + winPrize * (-1) + " dollars", number = score });
+                    bool worked = false;
+                    do
+                    {
+                        worked = !InsertRoulleteHistory(rouletteColorRequest.id, winPrize, rouletteColorRequest.decision, color);
+                    } while (worked);
+                    if (winPrize > 0) return Ok(new { statusCode = true, message = "You won " + winPrize + " dollars.", number = score });
+                    else return Ok(new { statusCode = false, message = "You lost " + winPrize * (-1) + " dollars.", number = score });
 
+                }
+                else return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later.", number = score });
             }
-            else return Ok(new { statusCode = false, message = "Something went wrong, please try later", number = score });
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later.", number = -1 });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later.", number = -1 });
         }
     }
     private int GetRouletteNumber()
@@ -151,6 +189,11 @@ public class GamesController : ControllerBase
             Console.WriteLine(e.Message); // logger
             return false;
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message); // logger
+            throw e;
+        }
     }
     private bool InsertCoinFlipHistory(int id, int money, string decision, int decisionCounter)
     {
@@ -173,6 +216,11 @@ public class GamesController : ControllerBase
         {
             Console.WriteLine(e.Message); // logger
             return false;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message); // logger
+            throw e;
         }
     }
     [HttpGet("getroulettehistory")]
@@ -207,6 +255,11 @@ public class GamesController : ControllerBase
             Console.WriteLine(e.Message); // logger
             return new JsonResult(null);
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return new JsonResult(null);
+        }
     }
     [HttpGet("getcoinfliphistory")]
     public JsonResult GetCoinFlipHistory(int id, int count)
@@ -236,6 +289,11 @@ public class GamesController : ControllerBase
             }
         }
         catch (SqlException e)
+        {
+            Console.WriteLine(e.Message); // logger
+            return new JsonResult(null);
+        }
+        catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
             return new JsonResult(null);

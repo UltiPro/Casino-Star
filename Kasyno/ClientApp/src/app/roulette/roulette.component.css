@@ -303,3 +303,7 @@
     width: 125px;
     transition: all .2s linear !important;
 }
+
+.pointer-cursor{
+    cursor: pointer;
+}

@@ -20,3 +20,9 @@ input:focus {
 button {
     color: white;
 }
+
+@media (max-width: 768px) {
+    .w-50 {
+        width: 75% !important;
+    }
+}

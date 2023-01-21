@@ -48,9 +48,8 @@ export class LoginComponent {
         this.router.navigateByUrl('');
       }
     }, error => {
-      console.log(error);
-      this.statusCode.emit(false);
-      this.message.emit("An error occurred while processing the data");
+      this.statusCode.emit(error.error.statusCode);
+      this.message.emit(error.error.message);
     });
   }
 }

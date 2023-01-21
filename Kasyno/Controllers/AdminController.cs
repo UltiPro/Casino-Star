@@ -25,11 +25,11 @@ public class AdminController : ControllerBase
     [HttpPost("getallusers")]
     public IActionResult GetAllUsers([FromBody] TokenVerification tokenVerification)
     {
-        if (!ModelState.IsValid) return Ok(new { statusCode = false, message = ModelState });
+        if (!ModelState.IsValid) return BadRequest(new { statusCode = false, message = ModelState });
         JsonResult answer = userController.GetUser(new TokenVerification(tokenVerification.id, tokenVerification.token));
         User? user = answer.Value as User;
-        if (user?.id == 0) return Ok(new { statusCode = false, message = "You are not permited to do this action, please re-login!" });
-        if (user?.admin == false) return Ok(new { statusCode = false, message = "You are not permited to do this action, you are not admin!" });
+        if (user?.id == 0) return Unauthorized(new { statusCode = false, message = "You are not permited to do this action, please re-login!" });
+        if (user?.admin == false) return Unauthorized(new { statusCode = false, message = "You are not permited to do this action, you are not admin!" });
         else
         {
             var listOfUsers = new List<UserFull>();
@@ -53,7 +53,12 @@ public class AdminController : ControllerBase
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message); // logger
-                return Ok(new { statusCode = false, message = "You are not permited to do this action" });
+                return UnprocessableEntity("Sql Error: "+e.Message+".");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return UnprocessableEntity("Other Error: "+e.Message+".");
             }
         }
     }
@@ -80,6 +85,11 @@ public class AdminController : ControllerBase
                 return true;
             }
             catch (SqlException e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return false;
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message); // logger
                 return false;
@@ -113,6 +123,11 @@ public class AdminController : ControllerBase
                 Console.WriteLine(e.Message); // logger
                 return false;
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return false;
+            }
         }
     }
     [HttpPost("adminuser")]
@@ -138,6 +153,11 @@ public class AdminController : ControllerBase
                 return true;
             }
             catch (SqlException e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return false;
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message); // logger
                 return false;
@@ -168,6 +188,11 @@ public class AdminController : ControllerBase
                 return true;
             }
             catch (SqlException e)
+            {
+                Console.WriteLine(e.Message); // logger
+                return false;
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message); // logger
                 return false;
