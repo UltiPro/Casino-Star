@@ -1,4 +1,4 @@
-#pragma warning disable CS8601, CS8604, CS8618, CS8602
+#pragma warning disable CS8601, CS8604, CS8618, CS8602, CA2200
 
 using System.Data;
 using System.Data.SqlClient;
