@@ -2,6 +2,6 @@ Patryk Komputer:
 data source=DESKTOP-EIM7AUQ\SQLEXPRESS;initial catalog=master;trusted_connection=true
 
 Patryk Laptop:
-
+data source=DESKTOP-8BUGJP2\SQLEXPRESS;initial catalog=master;trusted_connection=true
 
 Dawid Komputer:
