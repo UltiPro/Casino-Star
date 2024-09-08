@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿#pragma warning disable CS8601, CS8604, CS8618
+
+using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
@@ -116,7 +118,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
-            throw e;
+            throw;
         }
     }
 
@@ -166,7 +168,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
-            throw e;
+            throw;
         }
     }
 
@@ -263,7 +265,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
-            throw e;
+            throw;
         }
     }
 
@@ -324,7 +326,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
-            throw e;
+            throw;
         }
     }
 
@@ -389,7 +391,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
-            throw e;
+            throw;
         }
     }
 
@@ -411,7 +413,7 @@ public class UserController : ControllerBase
                 if (!r.Read()) return Unauthorized(new { statusCode = false, message = "You are not permited to do this action. Please login again." });
                 if (!Convert.ToBoolean(r["Active"])) return Unauthorized(new { statusCode = false, message = "This account is not active, cannot change email." });
                 if (Convert.ToBoolean(r["Banned"])) return Unauthorized(new { statusCode = false, message = "This account is banned, cannot change email." });
-                if (!Convert.ToString(r["Email"]).Equals(tokenVerificationWithEmailChange.oldEmail)) return Ok(new { statusCode = false, message = "Wrong old email." });
+                if (!Convert.ToString(r["Email"])!.Equals(tokenVerificationWithEmailChange.oldEmail)) return Ok(new { statusCode = false, message = "Wrong old email." });
                 if (ChangeEmailContinue(tokenVerificationWithEmailChange.id, tokenVerificationWithEmailChange.newEmail)) UnprocessableEntity(new { statusCode = false, message = "Something went wrong, please try later." });
                 return Ok(new { statusCode = true, message = "Email has been changed." });
             }
@@ -452,7 +454,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
-            throw e;
+            throw;
         }
     }
 }

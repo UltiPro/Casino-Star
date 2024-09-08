@@ -1,3 +1,5 @@
+#pragma warning disable CS8601, CS8604, CS8618
+
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
@@ -198,7 +200,7 @@ public class GamesController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
-            throw e;
+            throw;
         }
     }
 
@@ -227,7 +229,7 @@ public class GamesController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e.Message); // logger
-            throw e;
+            throw;
         }
     }
 

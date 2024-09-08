@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Models.BaseHistory;
 
 namespace Models.RouletteHistory;
 
-public class RouletteHistory : BaseHistory
+public class RouletteHistory : BaseHistory.BaseHistory
 {
     [Display(Name = "decisionWin")]
     public string decisionWin { get; set; }

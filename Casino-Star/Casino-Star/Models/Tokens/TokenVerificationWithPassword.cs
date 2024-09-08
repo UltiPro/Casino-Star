@@ -9,4 +9,9 @@ public class TokenVerificationWithPassword : TokenVerification
     [RegularExpression(@"^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[.~!@#$%^&*()+=[\]\\;:'""/,|{}<>?])\S{8,40}$", ErrorMessage = "Incorrect expression of password.")]
     [Display(Name = "password")]
     public string? password { get; set; }
+
+    public TokenVerificationWithPassword(int id, string token, string password) : base(id, token)
+    {
+        this.password = password;
+    }
 }

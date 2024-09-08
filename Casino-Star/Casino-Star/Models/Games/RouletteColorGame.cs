@@ -1,9 +1,10 @@
+#pragma warning disable 8618
+
 using System.ComponentModel.DataAnnotations;
-using Models.BaseRequest;
 
 namespace Models.Roulette;
 
-public class RouletteColorRequest : BaseRequest
+public class RouletteColorRequest : BaseRequest.BaseRequest
 {
     [Required]
     [Display(Name = "decision")]

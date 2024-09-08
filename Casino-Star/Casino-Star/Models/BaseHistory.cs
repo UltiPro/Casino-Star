@@ -13,7 +13,7 @@ public class BaseHistory
     [Display(Name = "decision")]
     public string decision { get; set; }
 
-    public BaseHistory(int id, DateTime date, int winMoney, string decision, string decisionWin)
+    public BaseHistory(int id, DateTime date, int winMoney, string decision)
     {
         this.id = id;
         this.date = date;

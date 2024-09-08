@@ -12,4 +12,10 @@ public class TokenVerificationWithEmailChange : TokenVerification
     [EmailAddress(ErrorMessage = "New e-mail is incorrect.")]
     [Display(Name = "newEmail")]
     public string? newEmail { get; set; }
+
+    public TokenVerificationWithEmailChange(int id, string token, string oldEmail, string newEmail) : base(id, token)
+    {
+        this.oldEmail = oldEmail;
+        this.newEmail = newEmail;
+    }
 }

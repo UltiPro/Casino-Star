@@ -1,3 +1,5 @@
+#pragma warning disable CS8601, CS8604, CS8618
+
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;

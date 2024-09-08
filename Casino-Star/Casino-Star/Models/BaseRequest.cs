@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Models.BaseRequest;
 
 public class BaseRequest

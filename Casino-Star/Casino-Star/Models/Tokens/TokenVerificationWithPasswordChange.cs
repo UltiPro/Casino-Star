@@ -17,4 +17,11 @@ public class TokenVerificationWithPasswordChange : TokenVerification
     [Compare("newPassword", ErrorMessage = "New passwords do not match!")]
     [Display(Name = "newPasswordRepeat")]
     public string? newPasswordRepeat { get; set; }
+
+    public TokenVerificationWithPasswordChange(int id, string token, string oldPassword, string newPassword, string newPasswordRepeat) : base(id, token)
+    {
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
+        this.newPasswordRepeat = newPasswordRepeat;
+    }
 }

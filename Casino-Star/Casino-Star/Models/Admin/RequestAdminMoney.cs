@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models.RequestAdminMoney;
 
-public class RequestAdminMoney : RequestAdmin
+public class RequestAdminMoney : RequestAdmin.RequestAdmin
 {
     [Required]
     [Display(Name = "money")]

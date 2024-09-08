@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Models.BaseHistory;
 
 namespace Models.CoinFlipHistory;
 
-public class CoinFlipHistory : BaseHistory
+public class CoinFlipHistory : BaseHistory.BaseHistory
 {
     [Display(Name = "decisionCounter")]
     public string decisionCounter { get; set; }

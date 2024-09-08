@@ -1,3 +1,5 @@
+#pragma warning disable 8618
+
 namespace AuthenticationJWT;
 
 public class AuthenticationJwtSettings

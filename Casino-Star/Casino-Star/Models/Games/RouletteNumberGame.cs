@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Models.BaseRequest;
 
 namespace Models.Roulette;
 
-public class RouletteNumberRequest : BaseRequest
+public class RouletteNumberRequest : BaseRequest.BaseRequest
 {
     [Required]
     [Display(Name = "decision")]

@@ -1,3 +1,5 @@
+#pragma warning disable
+
 using AuthenticationJWT;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

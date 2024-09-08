@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Models.BaseRequest;
 
 namespace Models.CoinFlip;
 
-public class CoinFlipRequest : BaseRequest
+public class CoinFlipRequest : BaseRequest.BaseRequest
 {
     [Required]
     [Display(Name = "decision")]
