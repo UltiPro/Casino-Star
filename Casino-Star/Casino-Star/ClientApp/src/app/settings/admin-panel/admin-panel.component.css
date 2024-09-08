@@ -1,0 +1,23 @@
+a:hover {
+  border: none;
+  text-shadow: none;
+  cursor: pointer;
+}
+
+input[type=number] {
+  width: 100%;
+  color: white;
+  background-color: transparent;
+  border: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

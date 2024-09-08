@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-center">
+    <fieldset class="w-100 border border-warning rounded shadow-lg">
+        <form [formGroup]="RechargeAccountForm" class="p-3" (ngSubmit)="onSubmit()">
+            <div class="input-group mt-2">
+                <label class="input-group-addon me-2" for="InputMoney"><img src="../../../assets/images/dolar.png"
+                        class="icon" /></label>
+                <input formControlName="InputMoney" type="number" step="1"
+                    class="form-control form-control-sm shadow rounded"
+                    [ngClass]="RechargeAccountForm.get('InputMoney')?.touched ? (RechargeAccountForm.get('InputMoney')?.valid ? 'is-valid' : 'is-invalid') : ''"
+                    [(ngModel)]='value' id="InputMoney">
+            </div>
+            <button [disabled]="RechargeAccountForm.invalid" type="submit"
+                class="btn btn-warning text-dark w-100 mt-3 shadow">Recharge Account</button>
+        </form>
+    </fieldset>
+</div>

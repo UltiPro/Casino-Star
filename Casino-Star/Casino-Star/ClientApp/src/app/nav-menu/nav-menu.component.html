@@ -1,0 +1,38 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-opacity-50 border-CasinoNavBar shadow-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" [routerLink]="['/']">{{appName | uppercase}}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+        aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse text-start" [ngClass]="{ show: isExpanded }">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-Casino" [routerLink]="['/Roulette']">Roulette</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-Casino" [routerLink]="['/Coin-Flip']">Coin-Flip</a>
+          </li>
+        </ul>
+        <div *ngIf="!userService.loggedIn else Logged">
+          <a *ngIf="this.router.url != '/Login'" [routerLink]="['/Login']"><button class="btn btn-success">Login <span
+                class="text-Casino">|</span> Sign In</button></a>
+        </div>
+        <ng-template #Logged>
+          <div class="w-auto w-xxs-25 p-0 mb-2 mb-lg-0 me-4 text-lg-end small"> Welcome, <span
+              class="text-danger">{{userService.user?.GetName()}}</span><br />
+            {{userService.user?.GetMoney()}}
+            <img src="/assets/images/dolar.png" class="money-icon">
+          </div>
+          <a [routerLink]="['/Settings']" class="rotate-animation">
+            <button class="btn btn-secondary p-1 me-2 shadow-none">
+              <img src="/assets/images/whiteSettings.png" class="settings-button">
+            </button>
+          </a>
+          <button class="btn btn-danger logout-button" (click)="userService.Logout()">Log Out</button>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
+</header>

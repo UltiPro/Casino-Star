@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-center">
+    <fieldset class="w-100 border border-danger rounded shadow">
+        <form [formGroup]="DeleteAccountForm" class="p-3" (ngSubmit)="onSubmit()">
+            <div class="input-group mt-2">
+                <label class="input-group-addon me-2" for="InputPassword"><img src="/assets/images/password.png"
+                        class="icon" /></label>
+                <input formControlName="InputPassword" type="password"
+                    class="form-control form-control-sm shadow rounded"
+                    [ngClass]="DeleteAccountForm.get('InputPassword')?.touched ? (DeleteAccountForm.get('InputPassword')?.valid ? 'is-valid' : 'is-invalid') : ''"
+                    [(ngModel)]='password' id="InputPassword" placeholder="Confirm Password To Delete Account">
+            </div>
+            <button [disabled]="DeleteAccountForm.invalid" type="submit" class="btn btn-danger w-100 mt-3 shadow">Remove
+                Account</button>
+        </form>
+    </fieldset>
+</div>

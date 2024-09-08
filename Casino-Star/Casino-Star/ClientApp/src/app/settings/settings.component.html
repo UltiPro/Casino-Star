@@ -1,0 +1,83 @@
+<div [hidden]="statusCode == null" class="info-box col-5">
+    <app-info-alert message="{{message}}" messageTitle="Information"
+        [styleToInsert]="statusCode ? 'text-success' : 'text-danger'"
+        [styleToInsert2]="statusCode ? 'border-success' : 'border-danger'"
+        (statusCode)="reciveStatusCode($event)"></app-info-alert>
+</div>
+<div class="container" *ngIf="this.userService.loggedIn; else notLogged">
+    <div class="container col-12 col-md-8 mt-5 p-0 bg-dark bg-opacity-50 border border-warning shadow-lg rounded-3">
+        <mat-accordion>
+            <mat-expansion-panel hideToggle disabled class="p-4 border-bottom border-warning pe-none">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="text-success">
+                        Settings
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                class="m-0 p-3 border-bottom border-warning">
+                <mat-expansion-panel-header class="bg-opacity-100">
+                    <mat-panel-title>
+                        Change Email
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="mt-3">
+                    <app-change-email (statusCode)="reciveStatusCode($event)"
+                        (message)="reciveMessage($event)"></app-change-email>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                class="m-0 p-3 border-bottom border-warning">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Change Password
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="mt-3">
+                    <app-change-password (statusCode)="reciveStatusCode($event)"
+                        (message)="reciveMessage($event)"></app-change-password>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                class="m-0 p-3 border-bottom border-warning">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="text-warning">
+                        Recharge Account
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="mt-3">
+                    <app-recharge-account (statusCode)="reciveStatusCode($event)"
+                        (message)="reciveMessage($event)"></app-recharge-account>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                class="m-0 p-3 border-bottom border-warning">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="text-danger">
+                        Delete Account
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="mt-3">
+                    <app-remove-account (statusCode)="reciveStatusCode($event)"
+                        (message)="reciveMessage($event)"></app-remove-account>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                class="m-0 p-3 border-bottom border-warning" *ngIf="this.userService.user?.GetAdmin()">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="text-primary">
+                        Admin Panel
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <a class="text-Casino" [routerLink]="['../Admin-Panel']" routerLinkActive="router-link-active">
+                    <div class="admin-panel btn btn-primary mt-3 py-1 px-5 border border-2 rounded">
+                        Admin Panel
+                    </div>
+                </a>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+<ng-template #notLogged>
+    <app-only-for-loged></app-only-for-loged>
+</ng-template>
