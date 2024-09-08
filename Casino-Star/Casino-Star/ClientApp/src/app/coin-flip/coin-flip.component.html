@@ -1,0 +1,94 @@
+<div class="container">
+    <div [hidden]="statusCode == null" class="info-box col-4">
+        <app-info-alert message="{{message}}" messageTitle="{{messageTitle}}"
+            [styleToInsert]="statusCode ? 'text-success' : 'text-danger'"
+            [styleToInsert2]="statusCode ? 'border-success' : 'border-danger'"
+            (statusCode)="reciveStatusCode($event)"></app-info-alert>
+    </div>
+    <div class="container mb-5" *ngIf="this.userService.loggedIn; else notLogged">
+        <div class="btn-group mt-3" role="group">
+            <button type="button" class="btn btn-dark shadow-none btn-change"
+                (click)="ChangeView(true, $event)">Game</button>
+            <button type="button" class="btn btn-secondary shadow-none btn-change"
+                (click)="ChangeView(false, $event)">History</button>
+        </div>
+        <div class="row" [hidden]="!gameOrHistory">
+            <div class="col-12 col-xl-6 mt-5">
+                <div class="container-translate container-box p-3 bg-dark border border-warning rounded-3">
+                    Choose a side
+                    <hr />
+                    <div class="container mt-4">
+                        <div class="golden-coin coin-select me-5" (click)="ChangeDecision(true)" #golden_coin>
+                        </div>
+                        <div class="silver-coin ms-5" (click)="ChangeDecision(false)" #silver_coin></div>
+                        <form [formGroup]="AmmountForm" class="p-3 mt-4">
+                            <div class="input-group mt-2">
+                                <input formControlName="InputMoney" type="number" step="1"
+                                    class="form-control form-control-sm text-light bg-secondary bg-opacity-50 border-2 border-warning rounded shadow-none"
+                                    [ngClass]="AmmountForm.get('InputMoney')?.touched ? (AmmountForm.get('InputMoney')?.valid ? 'is-valid' : 'is-invalid') : ''"
+                                    [(ngModel)]='moneyBetted' id="InputMoney" placeholder="Bet money">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-6 mt-5">
+                <div class="container-translate container-coin mt-0 mt-xl-5 ">
+                    <div class="coin" [@coin]="state">
+                        <div class="side-a"></div>
+                        <div class="side-b"></div>
+                    </div>
+                </div>
+                <div class="container-translate container-game mt-5">
+                    <div class="btn-group bold">
+                        <button type="button" class="btn btn-outline-success text-white border-3 shadow-none"
+                            (click)="LounchGame(2)"
+                            [disabled]="this.statusCode != null || this.blockOfGame || !(AmmountForm.get('InputMoney')?.touched && AmmountForm.get('InputMoney')?.valid)">2x</button>
+                        <button type="button"
+                            class="btn btn-outline-success text-white border-3 border-end-0 border-start-0 shadow-none"
+                            (click)="LounchGame(4)"
+                            [disabled]="this.statusCode != null || this.blockOfGame || !(AmmountForm.get('InputMoney')?.touched && AmmountForm.get('InputMoney')?.valid)">4x</button>
+                        <button type="button" class="btn btn-outline-success text-white border-3 shadow-none"
+                            (click)="LounchGame(10)"
+                            [disabled]="this.statusCode != null || this.blockOfGame || !(AmmountForm.get('InputMoney')?.touched && AmmountForm.get('InputMoney')?.valid)">10x</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" [hidden]="gameOrHistory">
+            <div class="table-responsive mt-4 mb-5">
+                <table class="table table-striped table-dark table-hover mt-2 border border-light shadow">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col" class="border-end border-light">Id Of Game</th>
+                            <th scope="col" class="border-end border-light pointer-cursor" (click)="SortByDate($event)">
+                                Date</th>
+                            <th scope="col" class="border-end border-light pointer-cursor"
+                                (click)="ShowByPrize($event)">Prize</th>
+                            <th scope="col" class="border-end border-light pointer-cursor"
+                                (click)="ShowByDecision($event)">Your Decision</th>
+                            <th scope="col" class="pointer-cursor" (click)="ShowByCounter($event)">Counter</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let gameHistory of this.gameHistory, let i = index">
+                            <th scope="row" class="text-center border-end border-light">{{gameHistory.id}}</th>
+                            <td scope="row" class="text-center border-end border-light">{{gameHistory.date | date:
+                                'dd/MM/yyyy hh:mm:ss'}}</td>
+                            <td scope="row" class="text-center border-end border-light"
+                                [ngClass]="gameHistory.winMoney > 0 ? 'text-success' : 'text-danger'">
+                                {{gameHistory.winMoney}}</td>
+                            <td scope="row" class="text-center border-end border-light"
+                                [ngClass]="gameHistory.decision == 'gold' ? 'text-warning' : 'text-secondary'">
+                                {{gameHistory.decision}}</td>
+                            <td scope="row" class="text-center border-light">{{gameHistory.decisionCounter}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ng-template #notLogged>
+        <app-only-for-loged></app-only-for-loged>
+    </ng-template>
+</div>

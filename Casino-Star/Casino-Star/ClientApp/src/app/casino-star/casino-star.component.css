@@ -1,0 +1,84 @@
+main {
+    margin-bottom: 100px;
+}
+
+header {
+    overflow: hidden;
+}
+
+section {
+    background-color: rgba(10, 9, 8, .5);
+}
+
+li {
+    position: relative;
+    list-style: none;
+    display: inline;
+    top: -15vh;
+}
+
+li:nth-child(1) {
+    animation: LiDropDown .5s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(2) {
+    animation: LiDropDown .5s .3s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(3) {
+    animation: LiDropDown .5s .6s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(4) {
+    animation: LiDropDown .5s .9s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(5) {
+    animation: LiDropDown .5s 1.2s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(6) {
+    animation: LiDropDown .5s 1.5s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(7) {
+    animation: LiDropDown .5s 1.8s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(8) {
+    animation: LiDropDown .5s 2.1s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(9) {
+    animation: LiDropDown .5s 2.4s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(10) {
+    animation: LiDropDown .5s 2.7s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+li:nth-child(11) {
+    animation: LiDropDown .5s 3s forwards ease-in, CasinoNeon 2s 3.2s infinite linear;
+}
+
+@keyframes LiDropDown {
+    0% {}
+
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes CasinoNeon {
+    0% {
+        text-shadow: none;
+    }
+
+    50% {
+        text-shadow: 0 0 20px rgb(255, 193, 7), 0 0 5px white;
+    }
+
+    100% {
+        text-shadow: none;
+    }
+}

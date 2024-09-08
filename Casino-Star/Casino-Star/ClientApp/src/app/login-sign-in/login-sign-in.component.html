@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="my-5">
+        <button (click)="ChangeView()" class="btn btn-outline-warning w-50 shadow">
+            <span *ngIf="isLogin; else RegistrationLabel">Go To Sign Up</span>
+            <ng-template #RegistrationLabel>
+                Go To Login
+            </ng-template>
+        </button>
+    </div>
+    <div [hidden]="statusCode == null" class="m-auto w-50">
+        <app-alert message="{{message}}" [styleToInsert]="statusCode ? 'bg-success' : 'bg-danger'"
+            (statusCode)="reciveStatusCode($event)"></app-alert>
+    </div>
+    <app-login *ngIf="isLogin; else Registration" (statusCode)="reciveStatusCode($event)"
+        (message)="reciveMessage($event)"></app-login>
+    <ng-template #Registration>
+        <app-sign-in (statusCode)="reciveStatusCode($event)" (message)="reciveMessage($event)"></app-sign-in>
+    </ng-template>
+</div>

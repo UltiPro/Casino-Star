@@ -1,0 +1,79 @@
+::placeholder {
+    color: whitesmoke;
+    opacity: 1;
+}
+
+.info-box {
+    position: absolute;
+    left: 50vw;
+    top: 40vh;
+    transform: translate(-50%, -100%);
+    z-index: 999;
+}
+
+.container-box {
+    height: 350px;
+}
+
+.coin {
+    position: relative;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    box-shadow: 0 0 5px #ffc107, 0 0 30px #ffc087;
+    border-radius: 50%;
+    transform-style: preserve-3d;
+}
+
+.coin div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: inset 0 0 45px rgba(255, 255, 255, .3), 0 12px 20px -10px rgba(0, 0, 0, .4);
+    backface-visibility: hidden;
+}
+
+.side-a {
+    background: url("./../../assets/images/coin.png"), #e09f3e;
+}
+
+.side-b {
+    background: url("./../../assets/images/coin_silver.png"), #e09f3e;
+    transform: rotateY(-180deg);
+}
+
+.golden-coin {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-image: url(../../assets/images/coin.png);
+    background-size: cover;
+    border-radius: 50%;
+    transition: box-shadow .2s ease-in-out;
+}
+
+.silver-coin {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-image: url(../../assets/images/coin_silver.png);
+    background-size: cover;
+    border-radius: 50%;
+    transition: box-shadow .2s ease-in-out;
+}
+
+.coin-select {
+    box-shadow: 0 0 10px 7px whitesmoke;
+}
+
+.btn-change {
+    width: 125px;
+    transition: all .2s linear !important;
+}
+
+.pointer-cursor {
+    cursor: pointer;
+}

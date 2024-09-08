@@ -1,0 +1,17 @@
+.separator {
+  border: 0;
+  border-top: 2px solid whitesmoke;
+  border-bottom: 3px solid grey;
+  width: 0;
+  animation: separator-width .7s .1s ease-out forwards;
+}
+
+@keyframes separator-width {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}

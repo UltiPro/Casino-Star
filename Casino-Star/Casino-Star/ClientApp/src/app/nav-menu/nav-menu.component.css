@@ -1,0 +1,49 @@
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+header {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1455px) and (min-width: 1015px) {
+  header {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 992px) {
+  header {
+    font-size: 0.95rem;
+  }
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.border-CasinoNavBar {
+  border-bottom: 1px solid rgba(var(--Casino-Inside), 0.5);
+}
+
+.settings-button {
+  width: 1.7rem;
+}
+
+.logout-button {
+  width: 7.1rem;
+}
+
+.money-icon {
+  width: 1rem;
+}
+
+.rotate-animation button img {
+  transition: transform .6s ease-in-out;
+}
+
+.rotate-animation:hover button img {
+  transform: rotate(135deg);
+}

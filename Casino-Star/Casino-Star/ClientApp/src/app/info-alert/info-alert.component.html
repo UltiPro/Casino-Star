@@ -1,0 +1,8 @@
+<div class="p-3 bg-dark bg-gradient border border-3 rounded-3" [ngClass]="styleToInsert2">
+    <div class="row">
+        <button class="btn-close btn-close-white position-absolute top-0 end-0 me-2 mt-2" (click)="onClose()"></button>
+        <div class="pb-3" [ngClass]="styleToInsert">{{messageTitle}}</div>
+        <hr class="separator m-auto rounded" />
+        <div class="text-start pb-3 pt-4">{{message}}</div>
+    </div>
+</div>
