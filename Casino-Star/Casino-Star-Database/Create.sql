@@ -49,7 +49,7 @@ CREATE TABLE [CoinFlip]
 GO
 ALTER TABLE [Roulette] WITH CHECK ADD CONSTRAINT [Roulette_fk0] FOREIGN KEY ([WinnerId]) REFERENCES [Users]([Id])
 GO
-ALTER TABLE [CoinFlip] WITH CHECK ADD CONSTRAINT [CoinFlip_fk0] FOREIGN KEY ([WinnerId]) REFERENCES [Users]([Id]);
+ALTER TABLE [CoinFlip] WITH CHECK ADD CONSTRAINT [CoinFlip_fk0] FOREIGN KEY ([WinnerId]) REFERENCES [Users]([Id])
 GO
 CREATE PROCEDURE InsertUser
     (
@@ -270,4 +270,4 @@ BEGIN
     FROM Roulette
     WHERE WinnerId = @id
     ORDER BY Id DESC
-END
+END;

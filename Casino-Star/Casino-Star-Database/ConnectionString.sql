@@ -9,4 +9,4 @@ SELECT
     END
     AS ConnectionString
 FROM sys.server_principals
-WHERE NAME = suser_name()
+WHERE NAME = suser_name();
