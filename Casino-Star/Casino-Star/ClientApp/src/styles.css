@@ -1,0 +1,119 @@
+@font-face {
+    font-family: MainFont;
+    src: url("/assets/MainFont.ttf");
+}
+
+:root {
+    --Casino-Outside: 94, 80, 63;
+    --Casino-Inside: 198, 172, 143;
+    --Casino-Text: 234, 224, 213;
+    --Casino-Light-Border: 34, 51, 59;
+    --Casino-Border: 10, 9, 8;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(var(--Casino-Outside));
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(var(--Casino-Inside));
+    border-radius: 5px;
+}
+
+* {
+    outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border-color: none;
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+body,
+html {
+    color: rgb(var(--Casino-Text));
+    font-size: 1.2rem;
+    font-family: MainFont;
+}
+
+a,
+a:focus,
+a:active {
+    text-decoration: none;
+    text-shadow: none;
+    transition: all .8s !important;
+}
+
+a:hover {
+    color: rgb(var(--Casino-Text));
+    text-shadow: -1px 0 darkgrey, 0 1px darkgrey, 1px 0 darkgrey, 0 -1px darkgrey;
+}
+
+button {
+    transition: all 1s !important;
+}
+
+.background-CasinoStarImage {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: block;
+    background-image: url("/assets/background.jpg");
+    min-width: 100vw;
+    min-height: 100vh;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+.background-CasinoStar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.75);
+    min-width: 100vw;
+    min-height: 100vh;
+    -webkit-filter: blur(150px);
+    -moz-filter: blur(150px);
+    -o-filter: blur(150px);
+    -ms-filter: blur(150px);
+    filter: blur(150px);
+}
+
+.content {
+    position: relative;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    text-align: center;
+}
+
+.text-Casino {
+    color: rgb(var(--Casino-Text));
+}
+
+.shadowText {
+    text-shadow: -1px 0 rgb(var(--Casino-Light-Border)), 0 1px rgb(var(--Casino-Light-Border)), 1px 0 rgb(var(--Casino-Light-Border)), 0 -1px rgb(var(--Casino-Light-Border));
+}
+
+.icon {
+    width: 2rem;
+}
