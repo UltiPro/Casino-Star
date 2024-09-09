@@ -41,7 +41,7 @@ Publishing the app:
 
 ![Index Page Preview](/screenshots/IndexPage.gif)
 
-![Not Logged Page Preview](/screenshots/NotLogged.png)
+![Not Logged Page Preview](/screenshots/NotLoggedPage.png)
 
 ![Login Page 1 Preview](/screenshots/LoginPage1.png)
 
