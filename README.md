@@ -45,9 +45,7 @@ Publishing the app:
 
 ![Login Page 1 Preview](/screenshots/LoginPage1.png)
 
-![Login Page 2 Preview](/screenshots/LoginPage2.png)
-
-![Login Page 3 Preview](/screenshots/LoginPage3.gif)
+![Login Page 2 Preview](/screenshots/LoginPage2.gif)
 
 ![Roulette Page Preview](/screenshots/RoulettePage.gif)
 
