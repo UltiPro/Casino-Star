@@ -1,7 +1,7 @@
 # Casino-Star
 Casino Star created by Patryk 'UltiPro' Wójtowicz using ASP.NET Core with Angular.
 
-The casino website that includes coin-flip and roulette games. Each game has several gameplay options and has its own animation. Additionally, the website has a settings panel with the option of paying additional funds.
+The casino website that includes roulette and coin-flip games. Each game has several gameplay options and has its own animation. Additionally, the website has a settings panel with the option of paying additional funds. Due to studies and a lack of time, the project was abandoned.
 
 Warning:
 
