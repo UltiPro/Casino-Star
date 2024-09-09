@@ -1,2 +1,2 @@
 # Casino-Star
-Casino Star created by Patryk 'UltiPro' Wójtowicz using ASP.NET Core Angular.
+Casino Star created by Patryk 'UltiPro' Wójtowicz using ASP.NET Core with Angular.
