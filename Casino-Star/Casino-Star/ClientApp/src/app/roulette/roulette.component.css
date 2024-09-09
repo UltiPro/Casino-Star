@@ -307,3 +307,7 @@
 .pointer-cursor {
     cursor: pointer;
 }
+
+.btn-width {
+    width: 33%;
+}

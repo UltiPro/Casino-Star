@@ -77,3 +77,7 @@
 .pointer-cursor {
     cursor: pointer;
 }
+
+.btn.btn-outline-success {
+    min-width: 100px !important;
+}
