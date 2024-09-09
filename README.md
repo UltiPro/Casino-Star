@@ -39,4 +39,22 @@ Publishing the app:
 
 # Preview
 
-![Index Page 1 Preview](/screenshots/IndexPage1.png)
+![Index Page Preview](/screenshots/IndexPage.gif)
+
+![Not Logged Page Preview](/screenshots/NotLogged.png)
+
+![Login Page 1 Preview](/screenshots/LoginPage1.png)
+
+![Login Page 2 Preview](/screenshots/LoginPage2.png)
+
+![Login Page 3 Preview](/screenshots/LoginPage3.png)
+
+![Roulette Page Preview](/screenshots/RoulettePage.gif)
+
+![Coin Flip Page Preview](/screenshots/CoinFlipPage.gif)
+
+![Settings Page 1 Preview](/screenshots/SettingsPage1.png)
+
+![Settings Page 2 Preview](/screenshots/SettingsPage2.png)
+
+![Privacy Policy Page Preview](/screenshots/PrivacyPolicyPage.png)
